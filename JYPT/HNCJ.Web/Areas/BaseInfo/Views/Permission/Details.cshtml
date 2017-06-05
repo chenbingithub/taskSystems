@@ -1,0 +1,32 @@
+﻿@model HNCJ.Model.ActionInfo
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<link href="~/Content/jquery-easyui-1.5/tableStyle.css" rel="stylesheet" />
+<table >
+    <tr>
+        <td width="90px" >父节点：</td>
+        <td> @Html.DisplayFor(u => u.ParentName)</td>
+    </tr>
+    <tr>
+        <td>名称：</td>
+        <td>  @Html.DisplayFor(u => u.ActionName)</td>
+    </tr>
+    <tr>
+        <td>图标地址：</td>
+        <td> @Html.DisplayFor(u => u.MenuIcon)</td>
+    </tr>
+    <tr>
+        <td>Web网址：</td>
+        <td> @Html.DisplayFor(u => u.Url)</td>
+    </tr>
+    <tr>
+        <td>排序号：</td>
+        <td> @Html.DisplayFor(u => u.Sort)</td>
+    </tr>
+    <tr>
+        <td>描述：</td>
+        <td> @Html.DisplayFor(u => u.Description)</td>
+    </tr>
+	    	</table>

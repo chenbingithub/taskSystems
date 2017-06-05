@@ -1,0 +1,221 @@
+﻿@model HNCJ.Model.UserInfo
+
+@{
+    ViewBag.Title = "帮吆喝系统-注册页面";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+@section Content{
+    <style type="text/css">
+        input.error { border: 1px solid red; }
+        label.error {
+            padding-left: 16px;
+            padding-bottom: 2px;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+    <div class="main-box">
+        <div class="section clearfix">
+
+            <!--用户注册-->
+            <div class="main-tit">
+                <h2>会员注册</h2>
+            </div>
+            <div class="inner-box">
+                <form action="/UserInfo/Register" data-ajax="true" data-ajax-method="post" data-ajax-success="afterRegisterSuccess" id="signupForm" method="post">
+                    <div class="dl-list">
+                        <dl>
+                            <dt>用 户 名：</dt>
+                            <dd>
+                                <input id="UserName" name="UserName" type="text" class="input txt"/>
+
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</dt>
+                            <dd>
+                                <input id="UserPwd" name="UserPwd" type="password" class="input txt" onKeyUp=pwStrength(this.value)/>
+
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt>确认密码：</dt>
+                            <dd>
+                                <input id="confirm_password" name="confirm_password" type="password" class="input txt"/>
+
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>手机号：</dt>
+                            <dd>
+                                <input id="Telphone" name="Telphone" type="text" class="input txt"/>
+
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>电子邮箱：</dt>
+                            <dd>
+                                <input id="Email" name="Email" type="text" class="input txt"/>
+
+                            </dd>
+                        </dl>
+
+                        <!--开放注册-->
+                        <dl>
+                            <dt>验 证 码：</dt>
+                            <dd>
+                                <input id="txtCode" name="txtCode" type="text" class="input code"/>
+                                <a class="send" title="点击切换验证码" href="javascript:void(0)" onclick="changeCheckCode();return false;">
+                                    <img src="/homepage/showvcode/id=1" style="margin-top: 0px; width: 88px" id="img"/>
+                                </a>
+
+                            </dd>
+                        </dl>
+                        <!--/开放注册-->
+
+                        <!--开启注册协议-->
+                        <dl>
+                            <dt></dt>
+                            <dd>
+                                <input id="chkAgree" name="chkAgree" type="checkbox" value="1">
+                                <label for="chkAgree">我已仔细阅读并接受 <a href="javascript:void(0)" id="ids">注册许可协议</a></label>
+                               
+
+                            </dd>
+                        </dl>
+                        <!--开启注册协议-->
+
+
+                        <dl>
+                            <dt></dt>
+                            <dd>
+                                <input id="btnSubmit" name="btnSubmit" class="btn btn-success" type="submit" value="立即注册"/>
+                            </dd>
+                        </dl>
+                    </div>
+                </form>
+
+            </div>
+            <!--用户注册-->
+
+
+        </div>
+    </div>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+       
+        $(function () {
+            $("#ids").bind('click', function () {
+                var content = "1、在本站注册的会员，必须遵守《互联网电子公告服务管理规定》，不得在本站发表诽谤他人，侵犯他人隐私，侵犯他人知识产权，传播病毒，政治言论，商业讯息等信息。<br/>" +
+                    "2、在所有在本站发表的文章，本站都具有最终编辑权，并且保留用于印刷或向第三方发表的权利，如果你的资料不齐全，我们将有权不作任何通知使用你在本站发布的作品。<br/>" +
+                    "3、在登记过程中，您将选择注册名和密码。注册名的选择应遵守法律法规及社会公德。您必须对您的密码保密，您将对您注册名和密码下发生的所有活动承担责任。";
+                dialog({ title: '注册许可协议', content: content, okValue: '确定', ok: function () { } }).width(400).showModal();
+
+            });
+            jQuery.validator.addMethod("telphone", function (value, element) {
+                var length = value.length;
+                var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+                return (length == 11 && isMobile.test(value));
+            });
+            jQuery.validator.addMethod("stringCheck", function (value, element) {
+                var length = value.length;
+                var your_tel = /[^\a-zA-Z\u4E00-\u9FA5]/g;
+                var your_tel2 = /^[A-Za-z]*$/;
+                return this.optional(element) || (length <= 20 && !your_tel.test(value));
+            });
+           
+            $("#signupForm").validate({
+                rules: {
+                    UserName: {
+                        required: true,
+                        remote: {
+                            type: "post",
+                            url: "/UserInfo/isExits",
+                            data: { name: $("#UserName").attr('value') }
+                        },
+                        stringCheck: true,
+                        minlength: 4
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Telphone: {
+                        required: true,
+                        telphone: true
+                    },
+                    UserPwd: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 32
+                    },
+                    confirm_password: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#UserPwd"
+                    },
+                    chkAgree: {
+                        required: true
+                    }
+                },
+                messages: {
+                    UserName: {
+                        required: "请输入用户名",
+                        minlength: "用户名不能小于4个字符",
+                        stringCheck: "请输入中文或英文名称",
+                        remote: $.format("用户名已经被注册")
+                    },
+                    Email: {
+                        required: "请输入Email地址",
+                        email: "请输入正确的Email地址"
+                    },
+                    Telphone: {
+                        required: "请输入手机号",
+                        telphone: jQuery.format("手机号格式不正确")
+                    },
+                    UserPwd: {
+                        required: "请输入密码",
+                        minlength: jQuery.format("密码不能小于{0}个字 符"),
+                        maxlength: jQuery.format("密码不能大于{0}个字 符")
+                    },
+                    confirm_password: {
+                        required: "请输入确认密码",
+                        minlength: "确认密码不能小于6个字符",
+                        equalTo: "两次输入密码不一致"
+                    },
+                    chkAgree: {
+                        required: ""
+                    }
+                }
+            });
+        });
+
+
+        //切换验证码
+        function changeCheckCode() {
+            $("#img").attr("src", $("#img").attr("src") + 1);
+        }
+
+
+       
+        //表单的回调函数
+        function afterRegisterSuccess(data) {
+            if (data.status == 1) {
+                var d = dialog({
+                    title: '提示',
+                    content: '注册成功'
+                });
+                d.show();
+                setTimeout(function () {
+                    d.close().remove();
+                }, 2000);
+                window.location.href = "/Homepage/Index";
+            } else {
+                dialog({ title: '提示', content: data.msg, okValue: '确定', ok: function () { } }).width(300).showModal();
+            }
+        }
+    </script>
+}

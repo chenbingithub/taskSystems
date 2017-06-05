@@ -1,0 +1,110 @@
+﻿@model HNCJ.Model.UserInfo
+
+@{
+    ViewBag.Title = "会员中心 - 帮吆喝系统";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>会员中心</h2>
+@section Content{
+    
+   <!--会员中心-->
+      <div class="u-tab-content">
+        <div class="title-div">
+          <strong>会员中心</strong>
+        </div>
+        
+        <div class="head-box clearfix">
+          <div class="img-box">
+            @{
+                  var str = Model.Avatar ?? "/Content/jcrop/user-avatar.png";
+                  }
+              <img src="@str" />
+            
+          </div>
+          <div class="inner">
+            <h3>尊敬的会员 @Model.UserName ，欢迎您！</h3>
+            <p>您的会员等级：注册会员</p>
+            
+            <p>
+              <a href="/UserInfo/SetAvatar">设置头像</a>
+              &nbsp;&nbsp;&nbsp;&nbsp;<a href="/UserInfo/ModifyPwd">修改密码</a>
+            </p>
+          </div>
+        </div>
+        <div class="clear"></div>
+        
+        
+        <div class="head-inner clearfix">
+          <h3>账户统计</h3>
+          <dl>
+            <dt>账户余额：</dt>
+            <dd>
+              <b class="red">￥@(Model.Amount ?? 0)</b> 元
+            </dd>
+          </dl>
+          <dl>
+            <dt>账户积分：</dt>
+            <dd>
+              <b class="red">@(Model.Point??0)</b> 分
+            </dd>
+          </dl>
+          <dl>
+            <dt>未完成订单：</dt>
+            <dd>
+              <b class="red">
+                @Model.OrderInfo.Where(u=>u.Status<=4).ToList().Count
+              </b> 个
+            </dd>
+          </dl>
+          <dl>
+            <dt>未读消息：</dt>
+            <dd>
+              <b class="red">
+                0
+              </b>条
+            </dd>
+          </dl>
+        </div>
+        <div class="head-inner clearfix">
+          <h3>登录统计</h3>
+            @{
+                var logInList = ViewBag.New as List<HNCJ.Model.LoginLog>;
+                HNCJ.Model.LoginLog news = new HNCJ.Model.LoginLog();
+                HNCJ.Model.LoginLog olds = new HNCJ.Model.LoginLog();
+                if (logInList != null && logInList.Count == 2)
+                {
+                    news = logInList[0];
+                    olds = logInList[1];
+                }
+                else if (logInList != null && logInList.Count == 1)
+                {
+                    news = logInList[0];
+                    olds = logInList[0];
+                }
+
+            }
+          
+          <dl>
+            <dt>本次登录IP：</dt>
+            <dd>@news.IP</dd>
+          </dl>
+          <dl>
+            <dt>上次登录IP：</dt>
+            <dd>@olds.IP</dd>
+          </dl>
+          <dl>
+            <dt>本次登录时间：</dt>
+            <dd>@news.LoginTime</dd>
+          </dl>
+          <dl>
+            <dt>上次登录时间：</dt>
+            <dd>@olds.LoginTime</dd>
+          </dl>
+
+        </div>
+        
+      </div>
+      <!--/会员中心-->
+
+    }

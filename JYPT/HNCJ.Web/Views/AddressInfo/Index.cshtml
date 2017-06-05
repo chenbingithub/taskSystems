@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HNCJ.Model.AddressInfo>
+@{
+    ViewBag.Title = "收货地址 - 帮吆喝系统";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>收货地址</h2>
+@section Content{
+<div class="u-tab-head">
+        <p>
+          <a class="selected" href="/AddressInfo/Index">收货地址</a>
+        </p>
+        <span>
+         <a class="add" href="/AddressInfo/Add">添加新地址</a>
+        </span>
+</div>
+    <div class="u-tab-content">
+        <div class="title-div">
+          <strong>我的收货地址</strong>
+        </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ftable">
+          <tr>
+            <th width="30">选择</th>
+            <th align="left">收货地址</th>
+            <th width="18%" align="left">手机</th>
+            <th width="20%" align="left">邮编</th>
+            <th width="100">操作</th>
+          </tr>
+          <!--取得一个DataTable-->
+           <!--取得分页页码列表-->
+          @foreach(var item in Model){
+     
+            <tr>
+              <td width="20" align="center">
+                <input name="checkId" class="checkall" type="checkbox" value="@item.ID" >
+              </td>
+              <td>
+                ( @item.Consignee ) @item.Province,@item.City,@item.Area  @item.DetailedAddress
+              </td>
+              <td>@item.Telphone</td>
+              <td>@item.PostCode</td>
+              <td align="center">
+                <a href="/AddressInfo/Edit/@item.ID">编辑</a> | 
+                @if(item.IsDefault){
+                <span style="color:#0094ff;" >已默认&nbsp;&nbsp;&nbsp;</span>
+                }else{
+                <a onclick="clickSubmit('/AddressInfo/Default/@item.ID')" href="javascript:;">设为默认</a>
+                }
+                 
+              </td>
+            </tr>
+          }
+
+          
+        </table>
+        <div class="page-foot">
+          <div class="flickr right"></div><!--放置页码列表-->
+          <div class="page-btns">
+            <a onclick="checkAll(this);" href="javascript:;">全选</a>
+            <span class="pipe">|</span>
+            <a onclick="ExecPostBack();" href="javascript:;">删除</a>
+          </div>
+        </div>
+      </div>
+      
+      <!--/收货地址列表-->
+    <script src="~/Content/jquery-easyui-1.3.6/Common.js"></script>
+    <script type="text/javascript">
+       
+        function ExecPostBack(checkValue) {
+            if (arguments.length == 1) {
+                ExecDelete('/AddressInfo/Delete', valueArr, '/AddressInfo/Index');
+            } else {
+                var valueArr = '';
+                $("input[name='checkId']:checked").each(function (i) {
+                    valueArr += $(this).val();
+                    if (i < $("input[name='checkId']:checked").length - 1) {
+                        valueArr += ","
+                    }
+                });
+                
+                ExecDelete('/AddressInfo/Delete', valueArr, '/AddressInfo/Index');
+            }
+        }
+
+       
+    </script>
+    
+ }

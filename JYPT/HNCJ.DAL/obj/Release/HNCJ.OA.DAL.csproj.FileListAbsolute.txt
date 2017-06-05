@@ -1,0 +1,12 @@
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\HNCJ.OA.DAL.dll
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\HNCJ.OA.DAL.pdb
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\EntityFramework.dll
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\HNCJ.OA.IDAL.dll
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\HNCJ.OA.Model.dll
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\HNCJ.OA.IDAL.pdb
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\HNCJ.OA.Model.pdb
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\EntityFramework.xml
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\bin\Release\zh-Hans\EntityFramework.resources.dll
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\obj\Release\HNCJ.OA.DAL.csprojResolveAssemblyReference.cache
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\obj\Release\HNCJ.OA.DAL.dll
+E:\VS2012\HNCJ.OA\HNCJ.OA.DAL\obj\Release\HNCJ.OA.DAL.pdb

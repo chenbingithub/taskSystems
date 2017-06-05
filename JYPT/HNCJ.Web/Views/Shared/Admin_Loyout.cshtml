@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="/Content/ff.ico" />
+    <link href="~/Content/jquery-easyui-1.3.6/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/css/icon/icon.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.3.6/themes/color.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.3.6/demo.css" rel="stylesheet" />
+    <link href="~/Content/css/icon/icon.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.3.6/jquery.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Content/jquery-easyui-1.3.6/datapattern.js"></script>
+    <script type="text/javascript">
+        //时间格式化
+        function formatDate(value) {
+            if (value == "") return "";
+            return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d h:m"); 
+        }
+        //打开对话框
+        function OpenDialog(text) {
+            $('#dlg').dialog('open').dialog('setTitle', text);
+        }
+        //刷新页面
+        function refreshClick() {
+            window.location.reload();
+        }
+        //点击新增
+        function addClick() {
+            OpenDialog('新增');
+            $("#framediv").attr('src', $("#add").val());
+
+        }
+        //编辑方法
+        function editClick() {
+            var rows = $('#dg').datagrid('getSelections');
+            if (rows.length != 1) return;
+            var row = $('#dg').datagrid('getSelected');
+            OpenDialog('编辑');
+            var url=$("#edit").val();
+            url+="/"+row.ID;
+            $("#framediv").attr('src',url);
+        }
+        //多选删除
+        function deleteClick() {
+            var rows = $('#dg').datagrid('getSelections');
+            var ids = "";
+            if (rows.length > 0) {
+                for (var key in rows) {
+                    ids = ids + rows[key].ID + ",";
+                }
+                ids = ids.substr(0, ids.length - 1);
+                $.messager.confirm('Confirm', '你确定要移除吗?', function (r) {
+                    if (r) {
+                        $.post($("#delete").val(), { ids: ids }, function (result) {
+                            if (result.status == 1) {
+                                $('#dg').datagrid('reload');	// reload the Action data
+                            } else {
+                                $.messager.show({	// show error message
+                                    title: 'Error',
+                                    msg: result.errorMsg
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+            return;
+        }
+        function saveClick() {
+            $("#framediv")[0].contentWindow.submitForm();
+        }
+        function afterSuccess() {
+            $('#dlg').dialog('close');
+            $('#dg').datagrid('reload');
+        }
+        //搜索
+        function doSearch() {
+
+            $('#dg').datagrid('load', {
+                Itemid: $('#itemid').val(),
+                KeyString: $('#key').val()
+            });
+        }
+
+        //初始化页面
+        function InitialPage() {
+            $('#dg').treegrid('resize', {
+                height: '429px', // otherHeight 表格以上元素高度
+                width: '738px'//根据实际情况计算出的宽度
+            });
+            $(window).resize(function (e) {
+                window.setTimeout(function () {
+
+                    $('#dg').datagrid('resize', {
+                        height: $(window).height(), // otherHeight 表格以上元素高度
+                        width: $(window).width()//根据实际情况计算出的宽度
+                    });
+
+                }, 20);
+                e.stopPropagation();
+            });
+        }
+        $(function () {
+            InitialPage();
+        });
+    </script>
+    <style type="text/css">
+       
+    .select{ border:0px solid #fff; width:60px; border-radius:2px; color:#d3b4b4; border-bottom-color:#fff ;             
+         -moz-appearance:none;
+         -webkit-appearance:none; }
+        .input{  height:20px; background:#fff; color:#999; border:1px solid #e8e8e8; border-radius:2px; }
+        a {
+            text-decoration:none;
+        }
+        a:hover{ color:#999; opacity:0.9; }
+    </style>
+     @RenderSection("header",false) 
+</head>
+<body >
+    
+         @RenderSection("content",false) 
+    <div id="dlg" class="easyui-dialog" style="width:600px;height:400px;padding:0px;overflow:hidden;" modal="true" maximizable="true"
+    	 	closed="true" buttons="#dlg-buttons" cls="c6"> 	
+        
+            <iframe id='framediv' src='javascript:void(0);' frameborder='0' width='100%' height="100%" marginheight="0"></iframe>
+       
+    </div>
+    <div id="dlg-buttons">
+        
+        <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveClick()">确定</a>
+    	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+    </div>
+        
+        
+
+</body>
+    
+</html>

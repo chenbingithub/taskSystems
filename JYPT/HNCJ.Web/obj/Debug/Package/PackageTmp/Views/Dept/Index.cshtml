@@ -1,0 +1,760 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/zTree_v3-master/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.5/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/css/icon/icon.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.5/demo.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.5/jquery.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+    <script src="~/Content/zTree_v3-master/js/jquery.ztree.core.js"></script>
+    <script src="~/Content/zTree_v3-master/js/jquery.ztree.excheck.js"></script>
+ <script type="text/javascript">
+        String.prototype.Trim = function () {
+            return this.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        var DeptInfoCtrl = {
+            ID:0,//部门id
+            ParentID: -1,//部门父id
+            Name:"",//部门名称
+            //初始化
+            Init: function () {
+                this.TreeDept();
+            }, 
+            //添加部门打开一个窗口
+            Add: function () {
+                var url="/dept/add?parentid=" + this.ID+"&name="+this.Name;
+                var $this = this;
+                $('#dlg').dialog({
+                    title: '添加部门',
+                    width: 600,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: url,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            $this.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dlg').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //编辑部门打开一个窗口
+            Update: function () {
+                var treeObj = $.fn.zTree.getZTreeObj("tree");
+                var nodes = treeObj.getSelectedNodes();
+                if (nodes.length <= 0) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: "请选中一个部门",
+                        showType: 'slide',
+                        timeout: 500
+                    });
+                    return;
+                }
+                var url = "/dept/edit/" + this.ID;
+                var $this = this;
+                $('#dlg').dialog({
+                    title: '编辑部门',
+                    width: 600,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: url,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            $this.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dlg').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //删除部门
+            Delete: function () {
+                var treeObj = $.fn.zTree.getZTreeObj("tree");
+                var nodes = treeObj.getSelectedNodes();
+                if (nodes.length <= 0) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: "请选中一个部门",
+                        showType: 'slide',
+                        timeout: 500
+                    });
+                    return;
+                }
+                var $this = this;
+                $.messager.confirm('提示', '你确定要删除 ' + $this.Name + ' 吗?', function (r) {
+                    if (r) {
+                        $.post("/dept/delete", { id: $this.ID }, function (data) {
+                            if (data.status == 1) {
+                                
+                                $.messager.show({
+                                    title: '提示',
+                                    msg: data.msg,
+                                    showType: 'slide',
+                                    timeout: 500
+                                });
+                                var treeObj = $.fn.zTree.getZTreeObj("tree");
+                                treeObj.reAsyncChildNodes(null, "refresh");
+                            } else {
+                                $.messager.show({
+                                    title: '提示',
+                                    msg: data.msg,
+                                    showType: 'slide',
+                                    timeout: 1000,
+                                    style: {
+                                        right: '',
+                                        top: document.body.scrollTop + document.documentElement.scrollTop,
+                                        bottom: ''
+                                    }
+                                });
+
+                            }
+                        });;
+                    }
+                });
+                
+            },
+            //部门树
+            TreeDept: function () {
+                var $this = this;
+                 $.fn.zTree.init($("#tree"), {
+                    data: {
+                        key: {
+                            name: "deptname"
+                        },
+                        simpleData: {  
+                            enable: true,
+                            idKey: "ID",
+                            pIdKey: "ParentId",
+                            rootPId: -1
+                        }  
+                    } ,
+                    async: {
+                        enable: true,
+                        url:"/dept/DeptList"
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("tree");
+                            treeObj.expandAll(true);
+                        },
+                        onClick: function (event, treeId, treeNode) {
+                            $("#deptedit").removeClass('hide');//显示编辑按钮
+                            $("#deptdelete").removeClass('hide');//显示删除按钮
+                            if ($this.ID ==0) {
+                                $this.CreateDatagrid(treeNode.ID);
+                            } else {
+                                $this.ReloadDatagrid(treeNode.ID);
+                            }
+                            $this.ID = treeNode.ID;
+                            $this.ParentID = treeNode.ParentId;
+                            $this.Name = treeNode.deptname;
+                            
+                        }
+                    }
+                });
+                
+            },
+            //角色树
+            TreeRole: function () {
+                var row = $('#dg').datagrid('getSelected');
+                $.fn.zTree.init($("#treeRole"), {
+                    data: {
+                        key: {
+                            name: "RoleName"
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: "ID",
+                            pIdKey: "ParentId",
+                        }
+                    },
+                    check: {
+                        enable: true,
+                    },
+                 
+                    async: {
+                        enable: true,
+                        url: "/dept/GetRoleList",
+                        otherParam: { userid: row .ID}
+                    }
+                });
+            },
+            //打开一个角色树的界面
+            OpenRoleView: function () {
+                var $this = this;
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length != 1) return;
+                
+
+                $('#dailogrole').dialog({
+                    title: '关联角色',
+                    width: 400,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: '/dept/setrole',
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            var treeObj = $.fn.zTree.getZTreeObj("treeRole");
+                            var nodes = treeObj.getCheckedNodes(true);
+                            var roleids = "";
+                            for (var i in nodes) {
+                                roleids += nodes[i].ID+",";
+                            }
+                            roleids = roleids.substr(0, roleids.length - 1);
+                            var row = $('#dg').datagrid('getSelected');
+                            $.post("/dept/ProcessSetRole", { userid: row.ID, roleids: roleids }, function (data) {
+                                if (data.status === 1) {
+                                    $this.ReloadDatagrid();
+                                    $('#dailogrole').dialog('close');
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            });
+                            
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dailogrole').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //权限树
+            TreePermission: function () {
+                var row = $('#dg').datagrid('getSelected');
+                $.fn.zTree.init($("#treePermission"), {
+                    data: {
+                        key: {
+                            name: "ActionName"
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: "ID",
+                            pIdKey: "ParentId"
+                        }
+                    },
+                    check: {
+                        enable: true
+                    },
+
+                    async: {
+                        enable: true,
+                        url: "/dept/GetPermissionList",
+                        otherParam: { userid: row.ID }
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("treePermission");
+                            var nodes = treeObj.getNodes();
+                            if (nodes.length > 0) {
+                                treeObj.expandNode(nodes[0], true, false, true);
+                            }
+
+                        }
+                    }
+                   
+                });
+            },
+            TreePermissionItem: function () {
+                var row = $('#dg').datagrid('getSelected');
+                $.fn.zTree.init($("#treePermission"), {
+                    data: {
+                        key: {
+                            name: "ActionName"
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: "ActionId",
+                            pIdKey: "ParentId"
+                        }
+                    },
+                    check: {
+                        enable: true
+                    },
+
+                    async: {
+                        enable: true,
+                        url: "/dept/GetPermissionItemList",
+                        otherParam: { userid: row.ID }
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("treePermission");
+                            var nodes = treeObj.getNodes();
+                            if (nodes.length > 0) {
+                                treeObj.expandNode(nodes[0], true, false, true);
+                            }
+
+                        }
+                    }
+
+                });
+            },
+            //打开权限树的界面
+            OpenPermissionView: function () {
+                var $this = this;
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                $('#dailogrole').dialog({
+                    title: '关联模块',
+                    width: 400,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: '/dept/setPermission',
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            var treeObj = $.fn.zTree.getZTreeObj("treePermission");
+                            var nodes = treeObj.getCheckedNodes(true);
+                            var actionids = "";
+                            for (var i in nodes) {
+
+                                actionids += nodes[i].ID + ",";
+                            }
+                            actionids = actionids.substr(0, actionids.length - 1);
+                            var row = $('#dg').datagrid('getSelected');
+                            $.post("/dept/ProcessSetPermission", { userid: row.ID, actionids: actionids }, function (data) {
+                                if (data.status === 1) {
+                                    $this.ReloadDatagrid();
+                                    $('#dailogrole').dialog('close');
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            });
+
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dailogrole').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            OpenPermissionItemView: function () {
+                var $this = this;
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                $('#dailogrole').dialog({
+                    title: '关联操作权限',
+                    width: 400,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: '/dept/setPermissionItem',
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            var treeObj = $.fn.zTree.getZTreeObj("treePermission");
+                            var nodes = treeObj.getCheckedNodes(true);
+                            var actionids = "";
+                            for (var i in nodes) {
+                                if (nodes[i].IsMenu) continue;
+                                actionids += nodes[i].ID + ",";
+                            }
+                            actionids = actionids.substr(0, actionids.length - 1);
+                            var row = $('#dg').datagrid('getSelected');
+                            $.post("/dept/ProcessSetPermissionItem", { userid: row.ID, actionids: actionids }, function (data) {
+                                if (data.status === 1) {
+                                    $this.ReloadDatagrid();
+                                    $('#dailogrole').dialog('close');
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            });
+
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dailogrole').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //公用按钮保存用户和保存部门
+            ButtonCommon:function(){
+                $('#ff').form('submit', {
+                    onSubmit: function () {
+                        var isValid = $(this).form('enableValidation').form('validate');
+
+                        if (!isValid) {
+                            $.messager.progress('close');
+                        }
+                        return isValid;
+                    },
+                    success: function (result) {
+                        var data = eval('(' + result + ')'); // change the JSON string to javascript object
+                        if (data.status === 1) {
+                            $('#dlg').dialog('close');
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 2000
+                            });
+                            DeptInfoCtrl.TreeDept();
+                        } else if (data.status === 2) {
+                            $('#dlg').dialog('close');
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 2000
+                            });
+                            DeptInfoCtrl.ReloadDatagrid();
+                        } else {
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 2000,
+                                style: {
+                                    right: '',
+                                    top: document.body.scrollTop + document.documentElement.scrollTop,
+                                    bottom: ''
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+            //创建用户数据表格
+            CreateDatagrid: function (deptId) {
+                $('#dg').datagrid({
+                    height: '100%',
+                    width: '100%',
+                    url: '/Dept/GetUserInfoListByDeptId',
+                    pageSize:20,
+		            pagination:true,
+		            rownumbers: true,
+		            fitColumns: true,
+		            toolbar:"#toolbar",
+		            queryParams: {
+		                deptId: deptId
+		            },
+                    columns: [[
+                        { field: 'ck', width: 50,checkbox:true },
+                        { field: 'UserName', title: '用户名', width: 80 },
+                        { field: 'NickName', title: '姓名', width: 80, align: 'center' },
+                        { field: 'RoleName', title: '默认角色', width: 80, align: 'center' },
+                        { field: 'State', title: '有效', width: 50, align: 'center', formatter: this.IsChecked },
+                        { field: 'Telphone', title: '联系方式', width: 120, align: 'center' }
+                    ]]
+                });
+                //设置分页控件 
+                var p = $('#dg').datagrid('getPager');
+                $(p).pagination({
+                    pageSize: 20,//每页显示的记录条数，默认为10 
+                    pageList: [10, 20, 50],//可以设置每页记录条数的列表 
+                    beforePageText: '第',//页数文本框前显示的汉字 
+                    afterPageText: '页    共 {pages} 页',
+                    displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+
+                });
+            },
+            //重新加载用户表格
+            ReloadDatagrid: function (deptId) {
+                var id = this.ID;
+                if (deptId != null) {
+                    id = deptId;
+                }
+                $('#dg').datagrid('load', {
+                    deptId: id
+                });
+            },
+            //显示是否有效格式化
+            IsChecked: function (value, row) {
+                if (value == 1) {
+                    return '<a href="#" onclick=\'DeptInfoCtrl.SetStatus(' + row.ID + ',' + value + ')\'><span class="icon icon-chk_checked">&nbsp;</span></a>';
+                } else {
+                    return '<a href="#" onclick=\'DeptInfoCtrl.SetStatus(' + row.ID + ',' + value + ')\'><span class="icon icon-chk_unchecked">&nbsp;</span></a>';
+                }
+                
+            },
+            //改变是否有效
+            SetStatus: function (userid, state) {
+                $.post("/dept/SetStatus", { userid: userid, state: state }, function(data) {
+                    if (data.status == 1) {
+
+                        DeptInfoCtrl.ReloadDatagrid();
+                    } else {
+                        $.messager.show({
+                            title: '提示',
+                            msg: data.msg,
+                            showType: 'slide',
+                            timeout: 2000,
+                            style: {
+                                right: '',
+                                top: document.body.scrollTop + document.documentElement.scrollTop,
+                                bottom: ''
+                            }
+                        });
+                    }
+                });
+            },
+            //点击新增用户
+            addClick: function () {
+                var $this = this;
+                var url = "/dept/createuser?deptid=" + this.ID;
+                $('#dlg').dialog({
+                    title: '弹窗',
+                    width: 600,
+                    height: 300,
+                    closed: false,
+                    href: url,
+                    cache: false,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            $this.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dlg').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //编辑用户
+            editClick:function() {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                var row = $('#dg').datagrid('getSelected');
+                var url = "/dept/UpdateUser/" + row.ID;
+                var $this = this;
+                $('#dlg').dialog({
+                    title: '弹窗',
+                    width: 600,
+                    height: 300,
+                    closed: false,
+                    href:url,
+                    cache: false,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            $this.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#dlg').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //多选删除用户
+            deleteClick:function() {
+            var rows = $('#dg').datagrid('getSelections');
+            var ids = "";
+            if (rows.length > 0) {
+                for (var key in rows) {
+                    ids = ids + rows[key].ID + ",";
+                }
+                ids = ids.substr(0, ids.length - 1);
+                $.messager.confirm('Confirm', '你确定要删除吗?', function (r) {
+                    if (r) {
+                        $.post("/dept/deleteuser", { ids: ids }, function (data) {
+                            if (data.status === 1) {
+                                $.messager.show({
+                                    title: '提示',
+                                    msg: data.msg,
+                                    showType: 'slide',
+                                    timeout: 2000
+                                });
+                                DeptInfoCtrl.ReloadDatagrid();
+                            } else {
+                                $.messager.show({	// show error message
+                                    title: 'Error',
+                                    msg: data.msg
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+            return;
+            },
+            //重置用户密码
+            SetPassword: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length != 1) return;
+                var row = $('#dg').datagrid('getSelected');
+                $.post("/dept/SetPassword", { userid: row.ID }, function (data) {
+                    if (data.status == 2) {
+                        $.messager.show({
+                            title: '提示',
+                            msg: data.msg,
+                            showType: 'slide',
+                            timeout: 2000,
+                        });
+                        DeptInfoCtrl.ReloadDatagrid();
+                    } else {
+                        $.messager.show({
+                            title: '提示',
+                            msg: data.msg,
+                            showType: 'slide',
+                            timeout: 2000,
+                            style: {
+                                right: '',
+                                top: document.body.scrollTop + document.documentElement.scrollTop,
+                                bottom: ''
+                            }
+                        });
+                    }
+                });
+            },
+            //加载部门树提供选择
+            zTreeSeleteDept:function () {
+                $.fn.zTree.init($("#treeuser"), {
+                    data: {
+                    key: {
+                    name: "deptname"
+                },
+                    simpleData: {
+                    enable: true,
+                    idKey: "ID",
+                    pIdKey: "ParentId",
+                    }
+                },
+                async: {
+                        enable: true,
+                        url: "/dept/DeptList"
+                        }
+                
+                });
+            },
+            //选择部门弹窗
+            SelectDept:function () {
+                $('#deptinfodialog').dialog({
+                    title: '部门',
+                    width: 400,
+                    height: 200,
+                    closed: false,
+                    cache: false,
+                    href: '/dept/seletedept',
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            var treeObj = $.fn.zTree.getZTreeObj("treeuser");
+                            var nodes = treeObj.getSelectedNodes();
+                            $("#ParentId").val(nodes[0].ID);
+                            $("#ParentName").val(nodes[0].deptname);
+                            $('#deptinfodialog').dialog('close');
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#deptinfodialog').dialog('close');
+
+                        }
+                    }]
+                    });
+            }
+ 
+        };
+        
+        $(function () {
+            DeptInfoCtrl.Init();
+        });
+    </script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',border:false" style="height: 30px;">
+    @Html.PermissionButton("DeptInfo.Add","dept_add","#","新增",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_add"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.Add()"}})
+    @Html.PermissionButton("DeptInfo.Edit","dept_edit","#","编辑",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_edit"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.Update()"}})
+    @Html.PermissionButton("DeptInfo.Delete","dept_del","#","删除",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_delete"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.Delete()"}})
+
+   @* <a href="#" plain="true" class="easyui-linkbutton" icon="icon-group_add" onclick="DeptInfoCtrl.Add()">新增</a>
+    <a id="deptedit" href="#" plain="true" class="easyui-linkbutton hide" icon="icon-group_edit" onclick="DeptInfoCtrl.Update()">编辑</a>
+    <a id="deptdelete" href="#" plain="true" class="easyui-linkbutton hide" icon="icon-group_delete" onclick="DeptInfoCtrl.Delete()">删除</a>*@
+
+</div>
+
+	<div data-options="region:'west'" style="width:200px;overflow:hidden;">
+        <ul id="tree" class="ztree"></ul>
+
+	</div>
+
+	<div data-options="region:'center'" style="overflow:hidden;">
+        <table id="dg"></table>
+	</div>
+
+    <div id="dlg">
+
+	</div>
+<div id="toolbar">
+   @Html.PermissionButton("UserInfo.Add","a_add","#","新增",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-user_add"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.addClick()"}})
+    @Html.PermissionButton("UserInfo.Edit","a_edit","#","编辑",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-user_edit"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.editClick()"}})
+    @Html.PermissionButton("UserInfo.Delete","a_del","#","删除",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-user_delete"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.deleteClick()"}})
+    @Html.PermissionButton("UserInfo.CZPwd","a_pwd","#","重置密码",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-user_key"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.SetPassword()"}})
+    @Html.PermissionButton("UserInfo.Role","a_role","#","关联角色",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.OpenRoleView()"}})
+    @Html.PermissionButton("UserInfo.Action","a_permission","#","关联模块",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-monitor"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.OpenPermissionView()"}})
+    @Html.PermissionButton("UserInfo.ActionItem","a_permissionitem","#","关联操作权限",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-monitor_key"},{"class","easyui-linkbutton"},{"onclick","DeptInfoCtrl.OpenPermissionItemView()"}})
+
+    @*<a id="a_add" href="#" plain="true" class="easyui-linkbutton" icon="icon-user_add" onclick="DeptInfoCtrl.addClick()">新增</a>
+    <a id="a_edit" href="#" plain="true" class="easyui-linkbutton" icon="icon-user_edit" onclick="DeptInfoCtrl.editClick()">编辑</a>
+    <a id="a_del" href="#" plain="true" class="easyui-linkbutton" icon="icon-user_delete" onclick="DeptInfoCtrl.deleteClick()">删除</a>
+    <a id="a_pwd" href="#" plain="true" class="easyui-linkbutton" icon="icon-user_key" onclick="DeptInfoCtrl.SetPassword()">重置密码</a>
+    <a id="a_role" href="#" plain="true" class="easyui-linkbutton" icon="icon-group" onclick="DeptInfoCtrl.OpenRoleView()">关联角色</a>
+    <a id="a_permission" href="#" plain="true" class="easyui-linkbutton" icon="icon-monitor" onclick="DeptInfoCtrl.OpenPermissionView()">关联模块</a>
+    <a id="a_permissionitem" href="#" plain="true" class="easyui-linkbutton" icon="icon-monitor_key" onclick="DeptInfoCtrl.OpenPermissionItemView()">关联操作权限</a>*@
+
+</div>
+    <div id="dailogrole"></div>
+    <div id="deptinfodialog"></div>
+</body>
+</html>

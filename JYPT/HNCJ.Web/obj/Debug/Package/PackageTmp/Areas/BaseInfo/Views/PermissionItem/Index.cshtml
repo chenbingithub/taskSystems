@@ -1,0 +1,284 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+
+<script type="text/javascript">
+        var PermissionItemCtrl = {
+            ID:0,
+            //初始化
+            Init: function () {
+                this.TreePermission();
+            }, 
+            //部门树
+            TreePermission: function () {
+                var $this = this;
+                $.fn.zTree.init($("#Permission"), {
+                    data: {
+                        key: {
+                            name: "ActionName"
+                        },
+                        simpleData: {  
+                            enable: true,
+                            idKey: "ID",
+                            pIdKey: "ParentId",
+                            rootPId: -1
+                        }  
+                    } ,
+                    async: {
+                        enable: true,
+                        url: "/BaseInfo/Permission/GetActionList"
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("Permission");
+                            var nodes = treeObj.getNodes();
+                            if (nodes.length > 0) {
+                                treeObj.expandNode(nodes[0], true, false, true);
+                            }
+                            
+                        },
+                        onClick: function (event, treeId, treeNode) {
+                            if ($this.ID === 0) {
+                                $this.ID = treeNode.ID;
+                                $this.CreateDataGrid();
+
+                            } else {
+                                $this.ID = treeNode.ID;
+                                $this.ReloadDataGrid();
+                            }
+                        }
+                    }
+                });
+                
+            },
+            CreateDataGrid: function () {
+                $('#dg').datagrid({
+                    width: '100%',
+                    height: '100%',
+                    animate: true,
+                    collapsible: true,
+                    rownumbers: true,
+                    fitColumns: true,
+                    singleSelect: false,
+                    url: '/BaseInfo/PermissionItem/GetList',
+                    method: 'post',
+                    idField: 'ID',
+                    treeField: 'ActionItemName',
+                    toolbar: "#toolbar",
+                    queryParams: {
+                        actionInfoID: this.ID
+                    },
+                    columns: [[
+                        { field: 'ck', width: 50, checkbox: true },
+                        { field: 'ActionItemName', title: '名称', width: 100 },
+                        { field: 'ActionItemNo', title: '编号', width: 100 },
+                        { field: 'Sort', title: '排序号', width: 80, align: 'center' }
+
+                    ]]
+                });
+            },
+            ReloadDataGrid: function () {
+                $('#dg').datagrid('reload', {
+                    actionInfoID: this.ID
+                });
+            },
+           
+            //公用按钮
+            ButtonCommon: function () {
+                var $this = this;
+                $('#ff').form('submit', {
+                    onSubmit: function () {
+                        var isValid = $(this).form('enableValidation').form('validate');
+
+                        if (!isValid) {
+                            $.messager.progress('close');
+                        }
+                        return isValid;
+                    },
+                    success: function (result) {
+                        var data = eval('(' + result + ')'); // change the JSON string to javascript object
+                        if (data.status == 1) {
+                            $('#actiondialog').dialog('close');
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 1000
+                               
+                            });
+                            $this.ReloadDataGrid();
+                        } else {
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 2000,
+                                style: {
+                                    right: '',
+                                    top: document.body.scrollTop + document.documentElement.scrollTop,
+                                    bottom: ''
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+            //点击新增
+            addClick: function () {
+                var $this=this;
+                var url = "/BaseInfo/PermissionItem/add?actionId=" + $this.ID;
+                $('#actiondialog').dialog({
+                    title: '添加',
+                    width: 600,
+                    height: 300,
+                    href: url,
+                    closed: false,
+                    cache: false,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            $this.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#actiondialog').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //编辑方法
+            editClick: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: "请选中一条数据",
+                        showType: 'slide',
+                        timeout: 2000,
+                        style: {
+                            right: '',
+                            top: document.body.scrollTop + document.documentElement.scrollTop,
+                            bottom: ''
+                        }
+                    });
+                    return;
+                }
+                var row = $('#dg').datagrid('getSelected');
+                var $this = this;
+                var url = "/BaseInfo/PermissionItem/Edit/" + row.ID;
+                $('#actiondialog').dialog({
+                    title: '编辑',
+                    width: 600,
+                    height: 300,
+                    href: url,
+                    closed: false,
+                    cache: false,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            $this.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#actiondialog').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //多选删除
+            deleteClick: function () {
+                var $this = this;
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length<=0) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: "请至少选中一条数据",
+                        showType: 'slide',
+                        timeout: 2000,
+                        style: {
+                            right: '',
+                            top: document.body.scrollTop + document.documentElement.scrollTop,
+                            bottom: ''
+                        }
+                    });
+                    return;
+                }
+                var ids = "";
+                for (var key in rows) {
+                    if (rows.hasOwnProperty(key)) {
+                        ids = ids + rows[key].ID + ",";
+                    }
+                }
+                ids = ids.substr(0, ids.length - 1);
+                    $.messager.confirm('Confirm', '你确定要删除吗?', function (r) {
+                        if (r) {
+                            $.post("/BaseInfo/PermissionItem/delete", { ids: ids }, function (data) {
+                                if (data.status === 1) {
+                                    $.messager.show({
+                                        title: '提示',
+                                        msg: data.msg,
+                                        showType: 'slide',
+                                        timeout: 1000
+                                        
+                                    });
+                                    $this.ReloadDataGrid();
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            }, 'json');
+                        }
+                    });
+              
+            },
+            
+            
+        };
+        
+        $(function () {
+            PermissionItemCtrl.Init();
+        });
+    </script>
+<div class="easyui-layout" fit="true">
+ 
+	<div data-options="region:'west'" style="width:200px;overflow:hidden;">
+        <ul id="Permission" class="ztree"></ul>
+
+	</div>
+
+	<div data-options="region:'center'" style="overflow:hidden;">
+    <div id="p" class="easyui-panel" fit="true" border="false">
+       <table id="dg"></table>
+   </div>
+ 
+     <div id="toolbar">
+            @Html.PermissionButton("ActionItem.Add","a_add","#","新增",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_add"},{"class","easyui-linkbutton"},{"onclick","PermissionItemCtrl.addClick()"}})
+            @Html.PermissionButton("ActionItem.Edit","a_edit","#","编辑",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_edit"},{"class","easyui-linkbutton"},{"onclick","PermissionItemCtrl.editClick()"}})
+            @Html.PermissionButton("ActionItem.Delete","a_del","#","删除",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_delete"},{"class","easyui-linkbutton"},{"onclick","PermissionItemCtrl.deleteClick()"}})
+                @*<a id="a_add"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_add"   onclick="PermissionItemCtrl.addClick()">新增</a>
+                <a id="a_edit"    href="#" plain="true" class="easyui-linkbutton" icon="icon-group_edit" onclick="PermissionItemCtrl.editClick()" >编辑</a>
+                <a id="a_del"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_delete"  onclick="PermissionItemCtrl.deleteClick()">删除</a>*@
+            
+
+    </div>   
+
+	</div>
+
+  
+    
+</div>
+
+ <div id="actiondialog"></div>
+

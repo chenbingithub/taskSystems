@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section script{
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+        var goodsinfosCtrl = Object.create(Common);
+        goodsinfosCtrl.Review = function() {
+            var rows = $("#dg").datagrid('getSelections');
+            if (rows.length <= 0) {
+                $.messager.show({
+                    title: '提示',
+                    msg: "请至少选择一条数据",
+                    showType: 'slide',
+                    timeout: 2000
+                });
+                return;
+            }
+            var ids = "";
+            for (var key in rows) {
+                if (rows.hasOwnProperty(key)) {
+                    ids = ids + rows[key].ID + ",";
+                }
+            }
+            ids = ids.substr(0, ids.length - 1);
+            $.post("/goodsmanage/goodsinfos/doReview", { ids: ids }, function(data) {
+                if (data.status === 1) {
+                    $.messager.show({
+                        title: '提示',
+                        msg: data.msg,
+                        showType: 'slide',
+                        timeout: 2000
+                    });
+                    $("#dg").datagrid('load');
+                } else {
+                    $.messager.show({
+// show error message
+                        title: 'Error',
+                        msg: data.msg
+                    });
+                }
+
+            });
+        }
+
+        function OnClick(obj) {
+            var $this = obj;
+            $.post("/goodsmanage/goodsinfos/UpdatePrice", { goodsid: $this.attr('gid'), price: $this.val() }, function (data) {
+
+
+            });
+        }
+
+
+        $(function() {
+            var urls = {
+                urladd: "/goodsmanage/goodsinfos/add",
+                urledit: "/goodsmanage/goodsinfos/edit",
+                urldelete: "/goodsmanage/goodsinfos/delete"
+            };
+            goodsinfosCtrl.Init($("#dg"), $("#goodsinfosdialog"), urls);
+            $('#dg').datagrid({
+                width: '100%',
+                height: '100%',
+                url: '/goodsmanage/goodsinfos/getreviewlist',
+                pageSize: 20,
+                pagination: true,
+                rownumbers: true,
+                fitColumns: true,
+                toolbar: "#toolbar",
+
+                columns: [
+                    [
+                        { field: 'ck', width: 50, checkbox: true },
+                        { field: 'GoodsName', title: '名称', width: 80 },
+                        { field: 'GoodsTypeName', title: '类型', width: 80, align: 'center' },
+                        {
+                            field: 'GoodsPrice',
+                            title: '单价',
+                            width: 80,
+                            align: 'center',
+                            formatter: function(value, row, index) {
+                                return "<input type='number' onkeyup ='OnClick($(this))' onchange='OnClick($(this))' style='width:80px' value='" + value + "' gid=" + row.ID + " />";
+                            }
+                        },
+                        { field: 'GoodsNum', title: '数量', width: 50, align: 'center' },
+                        {
+                            field: 'RegTime',
+                            title: '上架时间',
+                            width: 100,
+                            formatter: function(value) {
+                                return value.formatter("yyyy-MM-dd hh:mm:ss");
+                            }
+                        }
+                    ]
+                ]
+            });
+
+            //设置分页控件 
+            var p = $('#dg').datagrid('getPager');
+            $(p).pagination({
+                pageSize: 20, //每页显示的记录条数，默认为10 
+                pageList: [10, 20, 50], //可以设置每页记录条数的列表 
+                beforePageText: '第', //页数文本框前显示的汉字 
+                afterPageText: '页    共 {pages} 页',
+                displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+
+            });
+        });
+
+
+    </script>
+
+}
+   
+ 
+
+<div id="p" class="easyui-panel" fit="true" border="false">
+       <table id="dg"></table>
+   </div>
+ 
+     <div id="toolbar">
+            @Html.PermissionButton("goodsinfos.Review","a_add","#","审核",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_add"},{"class","easyui-linkbutton"},{"onclick","goodsinfosCtrl.Review()"}})
+
+@*                <a id="a_add"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_add"   onclick="goodsinfosCtrl.addClick()">新增</a>
+                <a id="a_edit"    href="#" plain="true" class="easyui-linkbutton" icon="icon-group_edit" onclick="goodsinfosCtrl.editClick()" >编辑</a>
+                <a id="a_del"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_delete"  onclick="goodsinfosCtrl.deleteClick()">删除</a>*@
+            
+          <div style="float:right;">
+   
+	    <input name="KeyString" id="KeyString" type="text"class="easyui-textbox" onkeydown="if(event.keyCode==13){goodsinfosCtrl.doSearch();}">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="goodsinfosCtrl.doSearch()">搜索</a>
+        </div>
+    </div>   
+    <div id="goodsinfosdialog"></div>

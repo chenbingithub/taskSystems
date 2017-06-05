@@ -1,0 +1,90 @@
+﻿@model HNCJ.Model.UserInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>设置特殊权限</title>
+    <link href="~/Content/jquery-easyui-1.3.6/tableStyle.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(":radio").click(function () {
+                var uid = $(this).attr("uId");
+                var actionId = $(this).attr("actionId");
+                var value = $(this).val();
+                $.post("/UserInfo/SetUserAction", { UId: uid ,ActionId:actionId,Value:value});
+            });
+            $(".btnDelete").click(function () {
+
+                //后台删除
+                if ($(this).siblings(":checked").length > 0) {
+                    $.post("/UserInfo/DeleteAction", { UId: $(this).attr("uId"), ActionId: $(this).attr("actionId") });
+                }
+                //前台状态
+                $(this).siblings(":radio").attr("checked", false);
+             });
+        });
+        
+    </script>
+</head>
+<body>
+    <div>
+        <h2>当前给用户：@Model.UserName</h2><hr />
+        @{
+            List<HNCJ.Model.ActionInfo> allActions = ViewBag.AllActions;
+            List<HNCJ.Model.UserActionInfo> alluserActions = ViewBag.AllUserActions ;
+            <table width="100%" height="100%">
+                <tr><th>权限ID</th><th>权限名</th><th>权限地址</th><th>请求方法</th><th>操作</th></tr>
+                @foreach (var ActionInfo in allActions)
+                {
+                    string strId = "rd_" + ActionInfo.ID;
+                    <tr>
+                        <td>@ActionInfo.ID</td>
+                        <td>@ActionInfo.ActionName</td>
+                        <td>@ActionInfo.Url</td>
+                        <td>@ActionInfo.HttpMethd</td>
+                        @if (alluserActions.Where(u=>u.DelFlag==true&&u.UserInfoID==Model.ID&&u.ActionInfoID==ActionInfo.ID&&u.HasPermissin==1).FirstOrDefault()!=null)
+                        {
+                        <td >
+                                允许<input type="radio" actionId="@ActionInfo.ID" uId="@Model.ID" checked="checked" name="@strId" value="1" />&nbsp;
+                                拒绝<input type="radio" actionId="@ActionInfo.ID" uId="@Model.ID" name="@strId" value="0" />
+
+                            <input type="button" actionId="@ActionInfo.ID" uId="@Model.ID" name="@strId" value="删除" class="btnDelete" />
+                        </td>
+                        }
+                        else if (alluserActions.Where(u => u.DelFlag == true && u.UserInfoID == Model.ID && u.ActionInfoID == ActionInfo.ID && u.HasPermissin == 0).FirstOrDefault() != null)
+                        {
+                        
+                            <td >
+                                允许<input type="radio" actionId="@ActionInfo.ID" uId="@Model.ID"  name="@strId" value="1" />&nbsp;
+                                拒绝<input type="radio" actionId="@ActionInfo.ID" uId="@Model.ID"checked="checked" name="@strId" value="0" />
+
+                            <input type="button" actionId="@ActionInfo.ID" uId="@Model.ID" name="@strId" value="删除" class="btnDelete" />
+                        </td>
+                        }
+                        else
+                        {
+                            <td >
+                                允许<input type="radio" actionId="@ActionInfo.ID" uId="@Model.ID"  name="@strId" value="1" />&nbsp;
+                                拒绝<input type="radio" actionId="@ActionInfo.ID" uId="@Model.ID" name="@strId" value="0" />
+
+                            <input type="button" actionId="@ActionInfo.ID" uId="@Model.ID" name="@strId" value="删除" class="btnDelete" />
+                        </td>
+                        }
+
+                    </tr>
+                }
+            </table>
+                
+           
+         }
+    </div>
+</body>
+</html>

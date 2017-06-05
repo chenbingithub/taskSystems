@@ -1,0 +1,138 @@
+﻿ @model IEnumerable<HNCJ.Model.GoodsType>
+@{
+    ViewBag.Title = "帮吆喝系统-主页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@section Content{
+   
+
+    <!----------------------------------中间内容----------------------------------->
+    <div class="section clearfix">
+     <div class="line30"></div>
+    <div style="float:left;">
+        <img src="~/Content/templates/main/images/cc.png" style="height:50px;" />
+    </div>
+    <div style="float:right;">
+        
+        <input name="value" type="text" class="input txt" style="border:2px solid #0094ff;" placeholder="吆喝一下你想要的^_^" />
+         <a href="javascript:void(0)"class="btn" onclick="seach();" >搜索</a>
+        <a href="/HomePage/Message" class="btn btn-success" target="_blank">免费发布信息</a>
+    </div>
+        <script type="text/javascript">
+            function seach() {
+                var text = $("input[name=value]").val();
+                if (text == "") {
+                    return false;
+                }
+                window.location.href = "/homepage/list?value=" + text;
+            }
+        </script>
+</div>
+   
+    <div class="section clearfix nav">
+        <div class="nav_inner">
+            <ul>
+                 @foreach (var item in Model) {
+                <li><a href="@item.Url?typeId=@item.ID" title="@item.TypeName"><span class="yinwen">@item.English</span><span class="zhongwen">@item.TypeName</span></a></li>
+                 }
+            </ul>
+
+        </div>
+        <div class="line5"></div>
+    </div>
+    <!--导航-->
+
+    <div class="section clearfix">
+  <!--焦点图-->
+  <div class="wrapper clearfix"  >
+    <div class="sidebar-left" >
+      <div class="focusbox">
+        <ul class="slides">
+          @foreach(var item in ViewData["Focus"] as List<HNCJ.Model.FocusPicture>){
+          <li>
+            <a title="@item.Title" href="@item.Url">
+              <span class="note-bg"></span>
+              <span class="note-txt">@item.Title</span>
+              <img src="@item.ImagePath"  />
+            </a>
+          </li>
+          }
+            
+        </ul>
+      </div>
+    </div>
+    <!--/焦点图-->
+  </div>
+</div>
+ 
+    @{
+        var list = ViewBag.GoodsList as List<HNCJ.Model.GoodsList>;
+        foreach(var item in list){
+        <div class="section clearfix">
+          <div class="ntitle">
+            <h2>
+              <a href="@item.Url?typeId=@item.ID" >@item.TypeName<em></em></a>
+            </h2>
+            <p>
+              <!--小类-->
+                @if (item.typelist!=null) {
+                    foreach (var listt in item.typelist) { 
+                        <a href="@listt.Url?typeId=@item.ID" >@listt.TypeName</a>
+                    }
+                }
+                <a href="#" >更多</a>
+              <!--/小类-->
+            </p>
+          </div>
+          <div class="wrapper igoods clearfix">
+            <div class="img-list2">
+              <ul>
+                  @foreach(var goods in item.list){
+                 <li>
+                          <div class="wrap-box">
+                            <div class="img-box">
+                                <a title="@goods.GoodsName" href="/HomePage/Details/@goods.ID">
+                                    @{
+                                        if (!string.IsNullOrEmpty(goods.ImageMenu))
+                                        {
+                                            var img = goods.ImageMenu.Split(',');
+                                            <img src="@(img[0])"/>
+                                        }
+                                        else
+                                        {
+                                             <img src="@(goods.ImageMenu)"/>
+                                        }
+                                    }
+                                    
+                                </a>
+                            </div>
+                            <div class="info">
+                              <h3><a title="@goods.GoodsName" href="/HomePage/Details/@goods.ID">@goods.GoodsName</a></h3>
+                              <div class="col">
+                                <b>闲置物品</b>
+                              </div>
+                              <div class="col">
+                                <i>浏览：@goods.Point 次</i>
+                                时间：@goods.RegTime
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                  }
+                </ul>
+            </div>
+          </div>
+        </div>
+        
+        }
+     }
+
+<!-----------------------------------------------中间内容------------------------------------------------------>
+
+
+
+
+ }

@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<script type="text/javascript">
+        var GoodsManageCtrl = {
+            ID:0,
+            //初始化
+            Init: function () {
+                this.TreeDept();
+            }, 
+            
+            //部门树
+            TreeDept: function () {
+                var $this = this;
+                $.fn.zTree.init($("#treeusergoods"), {
+                    data: {
+                        key: {
+                            name: "Name"
+                        },
+                        simpleData: {  
+                            enable: true,
+                            idKey: "TreeID",
+                            pIdKey: "ParentId",
+                            rootPId: -1
+                        }  
+                    } ,
+                    async: {
+                        enable: true,
+                        url:"/goodsmanage/GoodsInfos/GetDeptAndUserList"
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("treeusergoods");
+                            treeObj.expandAll(true);
+                        },
+                        onClick: function (event, treeId, treeNode) {
+                            if (treeNode.IsUser) {
+                                $this.ID = treeNode.ID;
+                                $('#p').panel({
+                                    href: "/goodsmanage/GoodsInfos/showgoods"
+                                });
+                            } else {
+                                $.post("/goodsmanage/GoodsInfos/showdept", {id:treeNode.ID},function(data){
+                                    $("#p").html(data);
+                                });
+                                
+                            }
+                           
+                            
+                        }
+                    }
+                });
+                
+            }
+            
+            
+        };
+        
+        $(function () {
+            GoodsManageCtrl.Init();
+        });
+    </script>
+<div class="easyui-layout" fit="true">
+    
+	<div data-options="region:'west'" style="width:200px;overflow:hidden;">
+        <ul id="treeusergoods" class="ztree"></ul>
+
+	</div>
+
+	<div data-options="region:'center'" style="overflow:hidden;">
+        <div id="p" class="easyui-panel" data-options="fit:true,border:false"></div>
+	</div>
+
+  
+    
+</div>

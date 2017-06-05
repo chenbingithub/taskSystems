@@ -1,0 +1,830 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DataModelStoreContainer">
+    <EntitySet Name="UserInfo" EntityType="DataModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActionInfo" EntityType="DataModel.Store.ActionInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleInfo" EntityType="DataModel.Store.RoleInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderInfo" EntityType="DataModel.Store.OrderInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodsInfo" EntityType="DataModel.Store.GoodsInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GoodsType" EntityType="DataModel.Store.GoodsType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LinksInfo" EntityType="DataModel.Store.LinksInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FocusPicture" EntityType="DataModel.Store.FocusPicture" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Freight" EntityType="DataModel.Store.Freight" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Payment" EntityType="DataModel.Store.Payment" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WFTemp" EntityType="DataModel.Store.WFTemp" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WFInstance" EntityType="DataModel.Store.WFInstance" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileInfo" EntityType="DataModel.Store.FileInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WFStep" EntityType="DataModel.Store.WFStep" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AddressInfo" EntityType="DataModel.Store.AddressInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LoginLog" EntityType="DataModel.Store.LoginLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CartInfo" EntityType="DataModel.Store.CartInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderDetailInfo" EntityType="DataModel.Store.OrderDetailInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Deals" EntityType="DataModel.Store.Deals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Dept" EntityType="DataModel.Store.Dept" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SysLog" EntityType="DataModel.Store.SysLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActionItem" EntityType="DataModel.Store.ActionItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comment" EntityType="DataModel.Store.Comment" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfoRoleInfo" EntityType="DataModel.Store.UserInfoRoleInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleInfoActionInfo" EntityType="DataModel.Store.RoleInfoActionInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WFInstanceFileInfo" EntityType="DataModel.Store.WFInstanceFileInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfoActionInfo" EntityType="DataModel.Store.UserInfoActionInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfoActionItem" EntityType="DataModel.Store.UserInfoActionItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleInfoActionItem" EntityType="DataModel.Store.RoleInfoActionItem" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserInfoRoleInfo_UserInfo" Association="DataModel.Store.FK_UserInfoRoleInfo_UserInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="UserInfoRoleInfo" EntitySet="UserInfoRoleInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoRoleInfo_RoleInfo" Association="DataModel.Store.FK_UserInfoRoleInfo_RoleInfo">
+      <End Role="RoleInfo" EntitySet="RoleInfo" />
+      <End Role="UserInfoRoleInfo" EntitySet="UserInfoRoleInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleInfoActionInfo_RoleInfo" Association="DataModel.Store.FK_RoleInfoActionInfo_RoleInfo">
+      <End Role="RoleInfo" EntitySet="RoleInfo" />
+      <End Role="RoleInfoActionInfo" EntitySet="RoleInfoActionInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleInfoActionInfo_ActionInfo" Association="DataModel.Store.FK_RoleInfoActionInfo_ActionInfo">
+      <End Role="ActionInfo" EntitySet="ActionInfo" />
+      <End Role="RoleInfoActionInfo" EntitySet="RoleInfoActionInfo" />
+    </AssociationSet>
+    <AssociationSet Name="UserInfoOrderInfo" Association="DataModel.Store.UserInfoOrderInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="OrderInfo" EntitySet="OrderInfo" />
+    </AssociationSet>
+    <AssociationSet Name="UserInfoGoodsInfo" Association="DataModel.Store.UserInfoGoodsInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+    </AssociationSet>
+    <AssociationSet Name="GoodsTypeGoodsInfo" Association="DataModel.Store.GoodsTypeGoodsInfo">
+      <End Role="GoodsType" EntitySet="GoodsType" />
+      <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WFInstanceFileInfo_WFInstance" Association="DataModel.Store.FK_WFInstanceFileInfo_WFInstance">
+      <End Role="WFInstance" EntitySet="WFInstance" />
+      <End Role="WFInstanceFileInfo" EntitySet="WFInstanceFileInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WFInstanceFileInfo_FileInfo" Association="DataModel.Store.FK_WFInstanceFileInfo_FileInfo">
+      <End Role="FileInfo" EntitySet="FileInfo" />
+      <End Role="WFInstanceFileInfo" EntitySet="WFInstanceFileInfo" />
+    </AssociationSet>
+    <AssociationSet Name="WFTempWFInstance" Association="DataModel.Store.WFTempWFInstance">
+      <End Role="WFTemp" EntitySet="WFTemp" />
+      <End Role="WFInstance" EntitySet="WFInstance" />
+    </AssociationSet>
+    <AssociationSet Name="WFInstanceWFStep" Association="DataModel.Store.WFInstanceWFStep">
+      <End Role="WFInstance" EntitySet="WFInstance" />
+      <End Role="WFStep" EntitySet="WFStep" />
+    </AssociationSet>
+    <AssociationSet Name="UserInfoAddressInfo" Association="DataModel.Store.UserInfoAddressInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="AddressInfo" EntitySet="AddressInfo" />
+    </AssociationSet>
+    <AssociationSet Name="OrderDetailInfoOrderInfo" Association="DataModel.Store.OrderDetailInfoOrderInfo">
+      <End Role="OrderDetailInfo" EntitySet="OrderDetailInfo" />
+      <End Role="OrderInfo" EntitySet="OrderInfo" />
+    </AssociationSet>
+    <AssociationSet Name="OrderDetailInfoGoodsInfo" Association="DataModel.Store.OrderDetailInfoGoodsInfo">
+      <End Role="OrderDetailInfo" EntitySet="OrderDetailInfo" />
+      <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+    </AssociationSet>
+    <AssociationSet Name="CartInfoUserInfo" Association="DataModel.Store.CartInfoUserInfo">
+      <End Role="CartInfo" EntitySet="CartInfo" />
+      <End Role="UserInfo" EntitySet="UserInfo" />
+    </AssociationSet>
+    <AssociationSet Name="CartInfoGoodsInfo" Association="DataModel.Store.CartInfoGoodsInfo">
+      <End Role="CartInfo" EntitySet="CartInfo" />
+      <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+    </AssociationSet>
+    <AssociationSet Name="PaymentDeals" Association="DataModel.Store.PaymentDeals">
+      <End Role="Payment" EntitySet="Payment" />
+      <End Role="Deals" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="DeptUserInfo" Association="DataModel.Store.DeptUserInfo">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="UserInfo" EntitySet="UserInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoActionInfo_UserInfo" Association="DataModel.Store.FK_UserInfoActionInfo_UserInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="UserInfoActionInfo" EntitySet="UserInfoActionInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoActionInfo_ActionInfo" Association="DataModel.Store.FK_UserInfoActionInfo_ActionInfo">
+      <End Role="ActionInfo" EntitySet="ActionInfo" />
+      <End Role="UserInfoActionInfo" EntitySet="UserInfoActionInfo" />
+    </AssociationSet>
+    <AssociationSet Name="ActionInfoActionItem" Association="DataModel.Store.ActionInfoActionItem">
+      <End Role="ActionInfo" EntitySet="ActionInfo" />
+      <End Role="ActionItem" EntitySet="ActionItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoActionItem_UserInfo" Association="DataModel.Store.FK_UserInfoActionItem_UserInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="UserInfoActionItem" EntitySet="UserInfoActionItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoActionItem_ActionItem" Association="DataModel.Store.FK_UserInfoActionItem_ActionItem">
+      <End Role="ActionItem" EntitySet="ActionItem" />
+      <End Role="UserInfoActionItem" EntitySet="UserInfoActionItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleInfoActionItem_RoleInfo" Association="DataModel.Store.FK_RoleInfoActionItem_RoleInfo">
+      <End Role="RoleInfo" EntitySet="RoleInfo" />
+      <End Role="RoleInfoActionItem" EntitySet="RoleInfoActionItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleInfoActionItem_ActionItem" Association="DataModel.Store.FK_RoleInfoActionItem_ActionItem">
+      <End Role="ActionItem" EntitySet="ActionItem" />
+      <End Role="RoleInfoActionItem" EntitySet="RoleInfoActionItem" />
+    </AssociationSet>
+    <AssociationSet Name="GoodsInfoComment" Association="DataModel.Store.GoodsInfoComment">
+      <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="salt" Type="nvarchar" Nullable="true" MaxLength="10" />
+    <Property Name="UserPwd" Type="nvarchar" Nullable="true" DefaultValue="123456" MaxLength="64" />
+    <Property Name="Avatar" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="NickName" Type="nvarchar" Nullable="true" MaxLength="100" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="IsSys" Type="bit" Nullable="true" DefaultValue="false" />
+    <Property Name="DeptID" Type="int" Nullable="false" />
+    <Property Name="State" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="Moblie" Type="nvarchar" Nullable="true" MaxLength="11" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Sex" Type="nvarchar" Nullable="true" MaxLength="2" />
+    <Property Name="Birthday" Type="datetime" Nullable="true" />
+    <Property Name="Telphone" Type="nvarchar" Nullable="true" MaxLength="11" />
+    <Property Name="area" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="qq" Type="nvarchar" Nullable="true" MaxLength="20" />
+    <Property Name="Amount" Type="decimal" Nullable="true" DefaultValue="0" Precision="10" Scale="2" />
+    <Property Name="Point" Type="int" Nullable="true" />
+    <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="DeptName" Type="nvarchar" Nullable="true" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="ActionInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="ParentName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="DelFlag" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="false" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="false" />
+    <Property Name="Url" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="HttpMethd" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsMenu" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="MenuIcon" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Sort" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="ParentId" Type="int" Nullable="true" DefaultValue="-1" />
+  </EntityType>
+  <EntityType Name="RoleInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="RoleNo" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="State" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderName" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="Content" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="Address" Type="nvarchar" Nullable="true" MaxLength="128" />
+    <Property Name="Status" Type="int" Nullable="true" />
+    <Property Name="Money" Type="decimal" Nullable="true" DefaultValue="0" Precision="10" Scale="2" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="DeliverTime" Type="datetime" Nullable="true" />
+    <Property Name="SuccessTime" Type="datetime" Nullable="true" />
+    <Property Name="UserInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GoodsInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsName" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="GoodsPrice" Type="decimal" Nullable="true" DefaultValue="0" Precision="10" Scale="2" />
+    <Property Name="GoodsRemark" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="GoodsNum" Type="int" Nullable="true" />
+    <Property Name="ImageMenu" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="GoodsAddress" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="UserInfoID" Type="int" Nullable="false" />
+    <Property Name="GoodsTypeID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="true" />
+    <Property Name="Point" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="GoodsType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar" Nullable="true" MaxLength="32" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="English" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="Url" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="NodeID" Type="int" Nullable="false" DefaultValue="0" />
+  </EntityType>
+  <EntityType Name="LinksInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" Nullable="true" MaxLength="32" />
+    <Property Name="Url" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="FocusPicture">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="ImagePath" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="Url" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Freight">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FreightName" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="FreightPrice" Type="decimal" Nullable="true" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PaymentName" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="APIURL" Type="nvarchar" Nullable="true" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="WFTemp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TempName" Type="nvarchar" Nullable="true" MaxLength="32" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TempForm" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="SubTime" Type="datetime" Nullable="true" />
+    <Property Name="ActivityType" Type="nvarchar" Nullable="true" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="WFInstance">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InstanceName" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="StartBy" Type="int" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="Level" Type="smallint" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="WFTempID" Type="int" Nullable="false" />
+    <Property Name="WFInstanceId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Status" Type="smallint" Nullable="true" />
+  </EntityType>
+  <EntityType Name="FileInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" Nullable="true" MaxLength="128" />
+    <Property Name="FileType" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="FilePath" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="FileSize" Type="nvarchar" Nullable="true" MaxLength="32" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="Remark" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="SubTime" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="WFStep">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StepName" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="ProcessBy" Type="int" Nullable="false" />
+    <Property Name="SubTime" Type="datetime" Nullable="true" />
+    <Property Name="ProcessTime" Type="datetime" Nullable="true" />
+    <Property Name="ProcessResult" Type="nvarchar" Nullable="true" MaxLength="128" />
+    <Property Name="ProcessComment" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="StepStatus" Type="smallint" Nullable="true" />
+    <Property Name="IsStartStep" Type="bit" Nullable="true" />
+    <Property Name="IsEndStep" Type="bit" Nullable="true" />
+    <Property Name="ParentStepId" Type="int" Nullable="true" />
+    <Property Name="WFInstanceID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AddressInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Consignee" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Telphone" Type="nvarchar" Nullable="false" MaxLength="11" />
+    <Property Name="DetailedAddress" Type="nvarchar" Nullable="true" MaxLength="128" />
+    <Property Name="IsDefault" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="UserInfoID" Type="int" Nullable="false" />
+    <Property Name="PostCode" Type="nvarchar" Nullable="true" MaxLength="6" />
+    <Property Name="Province" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="City" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="Area" Type="nvarchar" Nullable="true" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="LoginLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="LoginTime" Type="datetime" Nullable="true" />
+    <Property Name="IP" Type="nvarchar" Nullable="true" MaxLength="20" />
+    <Property Name="UserInfoID" Type="int" Nullable="false" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+  </EntityType>
+  <EntityType Name="CartInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsNum" Type="int" Nullable="true" DefaultValue="1" />
+    <Property Name="GoodsPrice" Type="decimal" Nullable="true" DefaultValue="0" Precision="10" Scale="2" />
+    <Property Name="Status" Type="int" Nullable="true" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="UserInfoID" Type="int" Nullable="false" />
+    <Property Name="GoodsInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetailInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GoodsNum" Type="int" Nullable="true" />
+    <Property Name="GoodsPrice" Type="decimal" Nullable="true" DefaultValue="0" Precision="10" Scale="2" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="OrderInfoID" Type="int" Nullable="false" />
+    <Property Name="GoodsInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Deals">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pay_order_no" Type="nvarchar" Nullable="true" MaxLength="32" />
+    <Property Name="pay_order_amount" Type="decimal" Nullable="true" DefaultValue="0" Precision="10" Scale="2" />
+    <Property Name="pay_user_name" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="PaymentID" Type="int" Nullable="false" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="deptno" Type="nvarchar" Nullable="true" MaxLength="32" />
+    <Property Name="deptname" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="ParentName" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="deptmanager" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="deptmanager_id" Type="int" Nullable="true" />
+    <Property Name="telphone" Type="nvarchar" Nullable="true" MaxLength="11" />
+    <Property Name="remark" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="true" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="true" />
+    <Property Name="ParentId" Type="int" Nullable="true" DefaultValue="-1" />
+  </EntityType>
+  <EntityType Name="SysLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserInfoID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Operation" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="OperationTime" Type="datetime" Nullable="true" />
+    <Property Name="DelFlag" Type="bit" Nullable="true" DefaultValue="true" />
+  </EntityType>
+  <EntityType Name="ActionItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionItemName" Type="nvarchar" Nullable="true" MaxLength="64" />
+    <Property Name="ActionItemNo" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Sort" Type="nvarchar" Nullable="true" MaxLength="10" />
+    <Property Name="DelFlag" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="RegTime" Type="datetime" Nullable="false" />
+    <Property Name="ModfiedOn" Type="datetime" Nullable="false" />
+    <Property Name="ActionInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="UserImg" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="GoodsInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserInfoRoleInfo">
+    <Key>
+      <PropertyRef Name="UserInfo_ID" />
+      <PropertyRef Name="RoleInfo_ID" />
+    </Key>
+    <Property Name="UserInfo_ID" Type="int" Nullable="false" />
+    <Property Name="RoleInfo_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleInfoActionInfo">
+    <Key>
+      <PropertyRef Name="RoleInfo_ID" />
+      <PropertyRef Name="ActionInfo_ID" />
+    </Key>
+    <Property Name="RoleInfo_ID" Type="int" Nullable="false" />
+    <Property Name="ActionInfo_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WFInstanceFileInfo">
+    <Key>
+      <PropertyRef Name="WFInstance_ID" />
+      <PropertyRef Name="FileInfo_ID" />
+    </Key>
+    <Property Name="WFInstance_ID" Type="int" Nullable="false" />
+    <Property Name="FileInfo_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserInfoActionInfo">
+    <Key>
+      <PropertyRef Name="UserInfo_ID" />
+      <PropertyRef Name="ActionInfo_ID" />
+    </Key>
+    <Property Name="UserInfo_ID" Type="int" Nullable="false" />
+    <Property Name="ActionInfo_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserInfoActionItem">
+    <Key>
+      <PropertyRef Name="UserInfo_ID" />
+      <PropertyRef Name="ActionItem_ID" />
+    </Key>
+    <Property Name="UserInfo_ID" Type="int" Nullable="false" />
+    <Property Name="ActionItem_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleInfoActionItem">
+    <Key>
+      <PropertyRef Name="RoleInfo_ID" />
+      <PropertyRef Name="ActionItem_ID" />
+    </Key>
+    <Property Name="RoleInfo_ID" Type="int" Nullable="false" />
+    <Property Name="ActionItem_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserInfoOrderInfo">
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="OrderInfo" Type="DataModel.Store.OrderInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderInfo">
+        <PropertyRef Name="UserInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserInfoGoodsInfo">
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="GoodsInfo" Type="DataModel.Store.GoodsInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GoodsInfo">
+        <PropertyRef Name="UserInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GoodsTypeGoodsInfo">
+    <End Role="GoodsType" Type="DataModel.Store.GoodsType" Multiplicity="1" />
+    <End Role="GoodsInfo" Type="DataModel.Store.GoodsInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GoodsInfo">
+        <PropertyRef Name="GoodsTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="WFTempWFInstance">
+    <End Role="WFTemp" Type="DataModel.Store.WFTemp" Multiplicity="1" />
+    <End Role="WFInstance" Type="DataModel.Store.WFInstance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WFTemp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WFInstance">
+        <PropertyRef Name="WFTempID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="WFInstanceWFStep">
+    <End Role="WFInstance" Type="DataModel.Store.WFInstance" Multiplicity="1" />
+    <End Role="WFStep" Type="DataModel.Store.WFStep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WFInstance">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WFStep">
+        <PropertyRef Name="WFInstanceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserInfoAddressInfo">
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="AddressInfo" Type="DataModel.Store.AddressInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AddressInfo">
+        <PropertyRef Name="UserInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrderDetailInfoOrderInfo">
+    <End Role="OrderDetailInfo" Type="DataModel.Store.OrderDetailInfo" Multiplicity="*" />
+    <End Role="OrderInfo" Type="DataModel.Store.OrderInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="OrderInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetailInfo">
+        <PropertyRef Name="OrderInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrderDetailInfoGoodsInfo">
+    <End Role="OrderDetailInfo" Type="DataModel.Store.OrderDetailInfo" Multiplicity="*" />
+    <End Role="GoodsInfo" Type="DataModel.Store.GoodsInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderDetailInfo">
+        <PropertyRef Name="GoodsInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartInfoUserInfo">
+    <End Role="CartInfo" Type="DataModel.Store.CartInfo" Multiplicity="*" />
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CartInfo">
+        <PropertyRef Name="UserInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartInfoGoodsInfo">
+    <End Role="CartInfo" Type="DataModel.Store.CartInfo" Multiplicity="*" />
+    <End Role="GoodsInfo" Type="DataModel.Store.GoodsInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CartInfo">
+        <PropertyRef Name="GoodsInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentDeals">
+    <End Role="Payment" Type="DataModel.Store.Payment" Multiplicity="1" />
+    <End Role="Deals" Type="DataModel.Store.Deals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Deals">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DeptUserInfo">
+    <End Role="Dept" Type="DataModel.Store.Dept" Multiplicity="1" />
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfo">
+        <PropertyRef Name="DeptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActionInfoActionItem">
+    <End Role="ActionInfo" Type="DataModel.Store.ActionInfo" Multiplicity="1" />
+    <End Role="ActionItem" Type="DataModel.Store.ActionItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ActionItem">
+        <PropertyRef Name="ActionInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GoodsInfoComment">
+    <End Role="GoodsInfo" Type="DataModel.Store.GoodsInfo" Multiplicity="1" />
+    <End Role="Comment" Type="DataModel.Store.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="GoodsInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoRoleInfo_UserInfo">
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="UserInfoRoleInfo" Type="DataModel.Store.UserInfoRoleInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfoRoleInfo">
+        <PropertyRef Name="UserInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoRoleInfo_RoleInfo">
+    <End Role="UserInfoRoleInfo" Type="DataModel.Store.UserInfoRoleInfo" Multiplicity="*" />
+    <End Role="RoleInfo" Type="DataModel.Store.RoleInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="RoleInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfoRoleInfo">
+        <PropertyRef Name="RoleInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleInfoActionInfo_RoleInfo">
+    <End Role="RoleInfo" Type="DataModel.Store.RoleInfo" Multiplicity="1" />
+    <End Role="RoleInfoActionInfo" Type="DataModel.Store.RoleInfoActionInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoleInfoActionInfo">
+        <PropertyRef Name="RoleInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleInfoActionInfo_ActionInfo">
+    <End Role="RoleInfoActionInfo" Type="DataModel.Store.RoleInfoActionInfo" Multiplicity="*" />
+    <End Role="ActionInfo" Type="DataModel.Store.ActionInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ActionInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoleInfoActionInfo">
+        <PropertyRef Name="ActionInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WFInstanceFileInfo_WFInstance">
+    <End Role="WFInstance" Type="DataModel.Store.WFInstance" Multiplicity="1" />
+    <End Role="WFInstanceFileInfo" Type="DataModel.Store.WFInstanceFileInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WFInstance">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WFInstanceFileInfo">
+        <PropertyRef Name="WFInstance_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WFInstanceFileInfo_FileInfo">
+    <End Role="WFInstanceFileInfo" Type="DataModel.Store.WFInstanceFileInfo" Multiplicity="*" />
+    <End Role="FileInfo" Type="DataModel.Store.FileInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="FileInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WFInstanceFileInfo">
+        <PropertyRef Name="FileInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoActionInfo_UserInfo">
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="UserInfoActionInfo" Type="DataModel.Store.UserInfoActionInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfoActionInfo">
+        <PropertyRef Name="UserInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoActionInfo_ActionInfo">
+    <End Role="UserInfoActionInfo" Type="DataModel.Store.UserInfoActionInfo" Multiplicity="*" />
+    <End Role="ActionInfo" Type="DataModel.Store.ActionInfo" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ActionInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfoActionInfo">
+        <PropertyRef Name="ActionInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoActionItem_UserInfo">
+    <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="UserInfoActionItem" Type="DataModel.Store.UserInfoActionItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfoActionItem">
+        <PropertyRef Name="UserInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoActionItem_ActionItem">
+    <End Role="UserInfoActionItem" Type="DataModel.Store.UserInfoActionItem" Multiplicity="*" />
+    <End Role="ActionItem" Type="DataModel.Store.ActionItem" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ActionItem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfoActionItem">
+        <PropertyRef Name="ActionItem_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleInfoActionItem_RoleInfo">
+    <End Role="RoleInfo" Type="DataModel.Store.RoleInfo" Multiplicity="1" />
+    <End Role="RoleInfoActionItem" Type="DataModel.Store.RoleInfoActionItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoleInfoActionItem">
+        <PropertyRef Name="RoleInfo_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleInfoActionItem_ActionItem">
+    <End Role="RoleInfoActionItem" Type="DataModel.Store.RoleInfoActionItem" Multiplicity="*" />
+    <End Role="ActionItem" Type="DataModel.Store.ActionItem" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ActionItem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoleInfoActionItem">
+        <PropertyRef Name="ActionItem_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,264 @@
+﻿@model HNCJ.Model.UserInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>帮吆喝-OA办公系统</title>
+    <link href="~/Content/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.3.6/Index.css" rel="stylesheet" />
+    <script src="~/Content/lib/jquery/jquery-1.9.0.min.js"></script>
+    <script src="~/Content/lib/ligerUI/js/core/base.js"></script>
+    <script src="~/Content/lib/ligerUI/js/ligerui.all.js"></script>
+    <style type="text/css">
+       
+
+        a {font-size:16px;font-family:'Adobe Devanagari';font-synthesis:weight;}   
+        a:link {color: blue; text-decoration:none;} 
+        a:active{color: red;text-decoration:none; }
+        a:visited {color:purple;text-decoration:none;}   
+        a:hover {color: red; text-decoration:none;} 
+
+        .l-case-title
+        {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        body, html
+        {
+            width: 100%;
+            height: 100%;
+        }
+        *
+        {
+            margin: 0;
+            padding: 0;
+        }
+        #winlinks
+        {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 100%;
+        }
+        #winlinks ul
+        {
+            position: relative;
+        }
+        #winlinks li
+        {
+            width: 70px;
+            cursor: pointer;
+            height: 80px;
+            position: absolute;
+            z-index: 101;
+            list-style: none;
+            text-align: center;
+        }
+        #winlinks li img
+        {
+            width: 36px;
+            height: 36px;
+        }
+        #winlinks li span
+        {
+            background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+            border-radius: 10px 10px 10px 10px;
+            display: block;
+            font-size: 12px;
+            margin-top: 1px;
+            color: White;
+            line-height: 18px;
+            text-align: center;
+        }
+        #winlinks li.l-over div.bg
+        {
+            display: block;
+        }
+        #winlinks li div.bg
+        {
+            display: none;
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            z-index: 0;
+            width: 75px;
+            height: 64px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: #000;
+            opacity: 0.1;
+            filter: alpha(opacity=10);
+        }
+        .l-taskbar-task-icon
+        {
+            top: 3px; left: 6px; background-image:none;
+        } 
+        .l-taskbar-task-content{ margin-left:30px;}
+        .l-taskbar-task-icon img
+        {
+            width: 22px;
+            height: 22px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#layout1").ligerLayout();
+        });
+    </script>
+</head>
+<body >
+    <div  class="l-page-top" style=" background: url(../Content/Images/task/logo3.jpg) repeat-x;height:67px; ">
+       
+        <header class="main-header">
+            <a href="javascript:void(0);"  class="logo">
+                <img src="~/Content/Images/task/42.png" />
+            </a>
+            <nav class="navbar-static-top">
+                
+                <div class="navbar-custom-menu">
+                    <script type="text/javascript">
+                        function dailoguser(t) {
+                            var obj = document.getElementById("dropdown-menu");
+                            
+                            if (obj.style.display == "block") {
+                                obj.style.display = 'none';
+                            } else {
+                                obj.style.display = 'block';
+                            }
+                        }
+                    </script>
+                    <ul class="nav-bar-nav">
+                        
+                        <li >
+                            <a class="dropdown-toggle" href="javascript:void(0)" onclick="dailoguser(this);" >
+                                <img src="~/Content/Images/Avatar/17aeb42e-7e36-4271-a94f-5a060d003d9f.jpg"  alt="User Image" />                                
+                                <span class="hidden-xs">@Model.UserName</span>
+                            </a>
+                           <ul class="dropdown-menu" id="dropdown-menu">
+                                <li><a  href="#" onclick="f_open('/userinfo/admindetails','个人信息','');"><i class="">
+                                    <img src="~/Content/jquery-easyui-1.3.6/themes/icons/man.png" /></i>个人信息</a></li>
+                          
+                                <li><a href="/userinfo/AdminExits"><i class="">
+                                    <img src="~/Content/jquery-easyui-1.3.6/themes/icons/clear.png" /></i>安全退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+    </div>
+    <div id="layout1" style="margin:0;overflow: hidden;" >
+            <div position="center" style="overflow: hidden; background: url(../Content/Images/task/gravity.jpg)" >
+            <div id="winlinks" >
+                <ul>
+                </ul>
+            </div>
+            </div>
+            
+        </div> 
+
+    
+</body>
+    <script type="text/javascript">
+        var LINKWIDTH = 90, LINKHEIGHT = 90, TASKBARHEIGHT = 43;
+        var winlinksul = $("#winlinks ul");
+        function f_open(url, title, icon) {
+            var win = $.ligerDialog.open(
+            {
+                height: 500, url: url, width: 800, showMax: true, showToggle: true, showMin: true, isResize: true, modal: false, title: title, slide: false, buttons: [
+                  {
+                      text: '确定', onclick: function (item, Dialog, index) {
+                          win.hide();
+                      }
+                  }
+                ]
+            });
+            var task = jQuery.ligerui.win.tasks[win.id];
+            if (task) {
+                $(".l-taskbar-task-icon:first", task).html('<img src="' + icon + '" />');
+            }
+            return win;
+        }
+    @{
+        List<HNCJ.Model.ActionInfo> menus = ViewBag.AllMenu as List<HNCJ.Model.ActionInfo>;
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        foreach(var item in menus){
+            sb.Append("{");
+            sb.Append("icon: '" + item.MenuIcon + "', title: '" + item.ActionName + "', url: '" + item.Url + "'"); 
+            sb.Append("},");
+        }
+        string str=sb.ToString().TrimEnd(',');
+     }
+        var links = [
+            @Html.Raw(str)
+        //        { icon: 'Content/windows/icon/big.png', title: '填写周报', url: '/userinfo/index' },
+        //        { icon: 'Content/Images/Alien%20Folder.png', title: 'treegrid', url: '../grid/treegrid/treegrid.htm' },
+        //        { icon: 'Content/images/3DSMAX.png', title: '多表头', url: '../grid/mulheader/grid2.htm' },
+        //        { icon: 'Content/images/Program Files Folder.png', title: '固定列', url: '../grid/frozen/frozengrid.htm' },
+        //        { icon: 'Content/images/Program Files Folder.png', title: '可拖动', url: '../base/drag.htm' },
+        //        { icon: 'Content/images/Alien Folder.png', title: '树', url: '../tree/draggable.htm' },
+        //        { icon: 'Content/images/Xp-G5 006.png', title: '下拉框', url: '../comboBox/comboBoxGrid.htm' },
+        //        { icon: 'Content/images/Xp-G5 006.png', title: '下拉框', url: '../comboBox/comboBoxGrid.htm' },
+        //        { icon: 'Content/images/Alien Folder.png', title: 'layout', url: '../layout/layoutFullHeight.htm' },
+        //         { icon: 'Content/images/Alien Folder.png', title: 'menu', url: '../menu/menubar.htm' },
+        //         { icon: 'Content/images/Xp-G5 006.png', title: 'tab', url: '../tab/tabHtml.htm' },
+        //         { icon: 'Content/images/3DSMAX.png', title: '分组', url: '../grid/groupable/checkbox.htm' }
+        ];
+
+        function onResize() {
+            var linksHeight = $(window).height() - TASKBARHEIGHT;
+            var winlinks = $("#winlinks");
+            winlinks.height(linksHeight);
+            var colMaxNumber = parseInt(linksHeight / LINKHEIGHT);//一列最多显示几个快捷方式
+            for (var i = 0, l = links.length; i < l; i++) {
+                var link = links[i];
+                var jlink = $("li[linkindex=" + i + "]", winlinks);
+                var top = (i % colMaxNumber) * LINKHEIGHT, left = parseInt(i / colMaxNumber) * LINKWIDTH;
+                if (isNaN(top) || isNaN(left)) continue;
+                jlink.css({ top: top, left: left });
+            }
+
+        }
+        function linksInit() {
+            for (var i = 0, l = links.length; i < l; i++) {
+                var link = links[i];
+                var jlink;
+                var jlink = $("<li></li>");
+                jlink.attr("linkindex", i);
+                jlink.append("<img src='" + link.icon + "' />");
+                jlink.append("<span>" + link.title + "</span>");
+                jlink.append("<div class='bg'></div>");
+                jlink.hover(function () {
+                    $(this).addClass("l-over");
+                }, function () {
+                    $(this).removeClass("l-over");
+                }).click(function () {
+                    var linkindex = $(this).attr("linkindex");
+                    var link = links[linkindex];
+                    f_open(link.url, link.title, link.icon);
+                });
+                jlink.appendTo(winlinksul);
+            }
+
+        }
+       
+            $(window).resize(onResize);
+            $.ligerui.win.removeTaskbar = function () { }; //不允许移除
+            $.ligerui.win.createTaskbar(); //页面加载时创建任务栏
+
+            linksInit();
+            onResize();
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="~/Content/ff.ico" />
+    
+     <link href="~/Content/templates/main/css/style.css" rel="stylesheet" />
+    <link href="~/Content/templates/artdialog/ui-dialog.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Content/templates/main/js/jquery.flexslider-min.js"></script>
+    <script src="~/Content/templates/artdialog/dialog-plus-min.js"></script>
+    <script type="text/javascript">
+        if (window.parent.window != window) {
+            window.top.location.href = "/UserLogin/Login";
+        }
+        $(function () {
+            
+            $(".focusbox").flexslider({
+                directionNav: false,
+                pauseOnAction: false
+            });
+        });
+        
+   
+</script>
+    @RenderSection("header",false)
+</head>
+<body >
+    
+    <div id="header">
+         <!--Header-->
+        <div class="header">
+          <div class="header-wrap">
+            <div class="section">
+             <div class="left-box">
+                <a class="logo" href="/HomePage/Index">帮吆喝</a>
+                 <p class="nav">
+                  <a href="/HomePage/Index">主页</a>
+                  <a href="/HomePage/Index">校园趣事</a>
+                  <a href="/HomePage/Message">发布信息</a>
+                  <a href="/UserLogin/AdminLogin">管理入口</a>
+                </p>
+              </div>
+                <script type="text/javascript">
+                    $.ajax({
+                        type: "POST",
+                        url: "/UserInfo/Check_login",
+                        dataType: "json",
+                        timeout: 20000,
+                        success: function (data) {
+                            if (data.status == "ok") {
+                                $("#menu").prepend('<li class="line"><a href="/UserInfo/Exits">退出</a></li>');
+                                $("#menu").prepend('<li class="login"><em></em><a href="/UserInfo/Details">会员中心</a></li>');
+                            } else {
+                                $("#menu").prepend('<li class="line"><a href="/UserInfo/Register">注册</a></li>');
+                                $("#menu").prepend('<li class="login"><em></em><a href="/UserLogin/Login">登录</a></li>');
+                            }
+                            $("#shoppingCartCount").text(data.count);
+                        }
+                    });
+                </script>
+              <div class="right-box">
+                  <ul id="menu">
+                     
+                  <li><a href="/UserInfo/MyCart">购物车<span id="shoppingCartCount"></span>件</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/Header-->
+    </div>
+    
+    <div id="container" >@RenderSection("Content",false)</div>
+    <div id="footer">
+        <!--Footer-->
+        <div class="footer">
+            <script type="text/javascript">
+                $.ajax({
+                    type: "POST",
+                    url: "/HomePage/Links",
+                    dataType: "json",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            $(".foot-nav").prepend("<a target='_blank' href=" + data[i].Url + ">" + data[i].Title + "</a>");
+                        }
+                    }
+                });
+            </script>
+          <div class="foot-nav">
+          </div>
+          <div class="copyright">
+             <p>版权  &copy;  hnjc </p>
+          </div>
+        </div>
+<!--/Footer-->
+    </div>
+</body>
+</html>
+<body>
+    
+</body>

@@ -1,0 +1,168 @@
+﻿@model IEnumerable<HNCJ.Model.OrderDetailInfo>
+
+@{
+    ViewBag.Title = "查看订单 - 帮吆喝系统";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<h2>查看订单</h2>
+@section Content{
+    <!--查看订单-->
+      <div class="u-tab-head">
+        <p>
+          <a href="/UserInfo/MyOrderInfo">交易订单</a>
+          <a href="/UserInfo/CloseOrder">已关闭订单</a>
+        </p>
+      </div>
+      <div class="u-tab-content">
+        <div class="title-div">
+          <strong>查看订单</strong>
+        </div>
+        
+        @{
+            var OrderInfo = ViewBag.OrderInfo as HNCJ.Model.OrderInfo;}
+          @if(OrderInfo.Status!=(int)HNCJ.Model.Enum.OrderInfoEnum.Error){
+            <div class="step-box mini">       
+              <ul>
+                <!--下单-->
+                <li class="first done">
+                  <div class="progress">
+                    <span class="text">下单</span>
+                  </div>
+                  <div class="info">
+                    @OrderInfo.RegTime
+                  </div>
+                </li>
+                <!--/下单-->
+            
+            
+            
+                <!--确认-->
+            
+                <li class="@(OrderInfo.ModfiedOn==null?"":"done")">
+            
+                  <div class="progress">
+                    <span class="text">确认</span>
+                  </div>
+                  <div class="info">
+                    @OrderInfo.ModfiedOn
+                  </div>
+                </li>
+                <!--/确认-->
+            
+                <!--发货-->
+            
+                <li class="@(OrderInfo.DeliverTime==null?"":"done")">
+            
+                  <div class="progress">
+                    <span class="text">发货</span>
+                  </div>
+                  <div class="info">
+                    @OrderInfo.DeliverTime
+                  </div>
+                </li>
+                <!--发货-->
+            
+                <!--完成-->
+            
+                <li class="last @(OrderInfo.SuccessTime==null?"":"done")">
+            
+                  <div class="progress">
+                    <span class="text">完成</span>
+                  </div>
+                  <div class="info">
+                    @OrderInfo.SuccessTime
+                  </div>
+                </li>
+                <!--完成-->
+              </ul>
+            </div>
+          }
+        <div class="line20"></div>
+        
+
+        <div class="form-box accept-box">
+          <dl class="head">
+            <dd>
+              订单号：@OrderInfo.OrderName
+              
+            </dd>
+          </dl>
+          <dl>
+            <dt>订单状态：</dt>
+            <dd>
+                @if (OrderInfo.Status != null)
+                {
+                    @HNCJ.Common.Utils.OrderInfoStatus((int)OrderInfo.Status)
+                }
+            </dd>
+          </dl>
+          
+        </div>
+              
+        <div class="line10"></div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="5" class="ftable">
+          <tr>
+            <th align="left" colspan="2">商品信息</th>
+            <th width="10%">单价</th>
+            <th width="10%">数量</th>
+            <th width="10%">金额</th>
+
+          </tr>
+          @foreach(var item in Model){
+          <tr>
+            <td width="60">
+              <a target="_blank" href="/HomePage/Details/@item.GoodsInfo.ID">
+                             @{
+                         var imageMenu = item.GoodsInfo.ImageMenu;
+                                    if (!string.IsNullOrEmpty(imageMenu))
+                                        {
+                                            var img = imageMenu.Split(',');
+                                            <img src="@(img[0])" class="img"/>
+                                        }
+                                        else
+                                        {
+                                             <img src="@(imageMenu)" class="img"/>
+                                        }
+                                    }
+              </a>
+            </td>
+            <td align="left">
+              <a target="_blank" href="/HomePage/Details/@item.GoodsInfo.ID">@item.GoodsInfo.GoodsName</a>
+              <p></p>
+            </td>
+            <td align="center">
+              <p>￥@item.GoodsInfo.GoodsPrice</p>
+            </td>
+            
+            <td align="center">@item.GoodsNum</td>
+              @{var money = item.GoodsNum * item.GoodsPrice;}
+            <td align="center">￥@money</td>
+          </tr>
+          }
+          <tr>
+            <td colspan="7" align="right">
+                
+              <p>商品金额：<b class="red">￥@OrderInfo.Money</b>&nbsp;&nbsp;+&nbsp;&nbsp;运费：<b class="red">￥0</b></p>
+              <p style="font-size:22px;">应付总金额：<b class="red">￥@OrderInfo.Money</b></p>
+            </td>
+          </tr>
+        </table>
+        <div class="line10"></div>
+        <div class="form-box accept-box">
+          <dl class="head">
+            <dd>收货信息</dd>
+          </dl>
+          <dl>
+            <dt>收货地址：</dt>
+            <dd>@OrderInfo.Address</dd>
+          </dl>
+          
+          <dl>
+            <dt>备注留言：</dt>
+            <dd>@Html.Label(OrderInfo.Content)</dd>
+          </dl>
+        </div>
+        
+      </div>
+      <!--/查看订单-->
+    }

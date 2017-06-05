@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6419db458ab847218cc20fb4e975f113" Name="关系图1" ZoomLevel="77" >
+        <EntityTypeShape EntityType="DataModel.UserInfo" Width="1.5" PointX="2.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataModel.ActionInfo" Width="1.5" PointX="7.625" PointY="0.875" />
+        <EntityTypeShape EntityType="DataModel.RoleInfo" Width="1.5" PointX="5.125" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="DataModel.UserInfoRoleInfo" />
+        <AssociationConnector Association="DataModel.RoleInfoActionInfo" />
+        <EntityTypeShape EntityType="DataModel.OrderInfo" Width="1.5" PointX="2.875" PointY="8" />
+        <EntityTypeShape EntityType="DataModel.GoodsInfo" Width="1.5" PointX="7" PointY="5.125" />
+        <AssociationConnector Association="DataModel.UserInfoOrderInfo" />
+        <AssociationConnector Association="DataModel.UserInfoGoodsInfo" />
+        <EntityTypeShape EntityType="DataModel.GoodsType" Width="1.5" PointX="9.5" PointY="4.625" />
+        <AssociationConnector Association="DataModel.GoodsTypeGoodsInfo" />
+        <EntityTypeShape EntityType="DataModel.LinksInfo" Width="1.5" PointX="13.875" PointY="3.375" />
+        <EntityTypeShape EntityType="DataModel.FocusPicture" Width="1.5" PointX="11.875" PointY="3.375" />
+        <EntityTypeShape EntityType="DataModel.Freight" Width="1.5" PointX="15.875" PointY="0.875" />
+        <EntityTypeShape EntityType="DataModel.Payment" PointX="12.25" PointY="6.25" Width="1.5" />
+        <EntityTypeShape EntityType="DataModel.WFTemp" Width="1.5" PointX="7.625" PointY="15.5" />
+        <EntityTypeShape EntityType="DataModel.WFInstance" Width="1.5" PointX="9.625" PointY="16" />
+        <EntityTypeShape EntityType="DataModel.FileInfo" Width="1.5" PointX="9" PointY="21.125" IsExpanded="true" />
+        <AssociationConnector Association="DataModel.WFInstanceFileInfo" />
+        <AssociationConnector Association="DataModel.WFTempWFInstance" />
+        <EntityTypeShape EntityType="DataModel.WFStep" Width="1.5" PointX="11.875" PointY="17.125" />
+        <AssociationConnector Association="DataModel.WFInstanceWFStep" />
+        <EntityTypeShape EntityType="DataModel.AddressInfo" Width="1.5" PointX="0.5" PointY="0.75" />
+        <AssociationConnector Association="DataModel.UserInfoAddressInfo" />
+        <EntityTypeShape EntityType="DataModel.LoginLog" Width="1.5" PointX="13.625" PointY="0.875" />
+        <EntityTypeShape EntityType="DataModel.CartInfo" Width="1.5" PointX="5.125" PointY="6.625" />
+        <EntityTypeShape EntityType="DataModel.OrderDetailInfo" Width="1.5" PointX="10.25" PointY="8.125" />
+        <AssociationConnector Association="DataModel.OrderDetailInfoOrderInfo" />
+        <AssociationConnector Association="DataModel.OrderDetailInfoGoodsInfo" />
+        <AssociationConnector Association="DataModel.CartInfoUserInfo" />
+        <AssociationConnector Association="DataModel.CartInfoGoodsInfo" />
+        <EntityTypeShape EntityType="DataModel.Deals" PointX="14.875" PointY="6.125" Width="1.625" />
+        <AssociationConnector Association="DataModel.PaymentDeals" />
+        <EntityTypeShape EntityType="DataModel.Dept" Width="1.5" PointX="0.5" PointY="4.75" />
+        <AssociationConnector Association="DataModel.DeptUserInfo" />
+        <AssociationConnector Association="DataModel.UserInfoActionInfo" />
+        <EntityTypeShape EntityType="DataModel.SysLog" Width="1.5" PointX="12" PointY="0.875" />
+        <EntityTypeShape EntityType="DataModel.ActionItem" Width="1.5" PointX="9.75" PointY="0.5" />
+        <AssociationConnector Association="DataModel.ActionInfoActionItem" />
+        <AssociationConnector Association="DataModel.UserInfoActionItem" />
+        <AssociationConnector Association="DataModel.RoleInfoActionItem" />
+        <EntityTypeShape EntityType="DataModel.Comment" Width="1.5" PointX="6.875" PointY="10.75" />
+        <AssociationConnector Association="DataModel.GoodsInfoComment" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1 @@
+obj\Debug\FincalActivity.g.xaml

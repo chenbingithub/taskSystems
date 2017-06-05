@@ -1,0 +1,331 @@
+﻿@using HNCJ.Model
+@model HNCJ.Model.GoodsInfo
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Content{
+
+    @{
+        var userinfo = (ViewBag.UserInfo as HNCJ.Model.UserInfo) ?? new HNCJ.Model.UserInfo();
+    }
+    <!----------------------------------中间内容----------------------------------->
+    <script src="~/Content/templates/main/js/common.js"></script>
+    <script src="~/Content/templates/main/js/picture.js"></script>
+    <script src="~/Content/templates/main/js/cart.js"></script>
+    <script src="~/Content/templates/main/js/jquery.jqzoom.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            //TAB切换
+            tabs('#goodsTabs', 'click');
+            //智能浮动层
+            $("#tabHead").smartFloat();
+            //初始化规格事件
+        });
+    </script>
+
+
+    <div class="section clearfix">
+    <div class="main-wrap">
+    <!--页面左边开始-->
+    <div class="left941">
+    <!--商品图片-->
+    <div class="goods-pic">
+        <!--幻灯片-->
+        <div class="pic-box">
+            <div class="pic-preview">
+                <span class="jqzoom">
+              <img />
+            </span>
+            </div>
+            <!--缩略图-->
+            <div class="pic-scroll">
+                <a class="prev">&lt;</a>
+                <a class="next">&gt;</a>
+                <div class="items">
+                    <ul>
+                        @if (!string.IsNullOrEmpty(Model.ImageMenu))
+                        {
+                            var tt = Model.ImageMenu;
+                            var str = tt.Split(',');
+                            foreach (var b in str)
+                            {
+                                <li><img bimg=@b src=@b onmousemove="preview(this);"/></li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+            <!--缩略图-->
+        </div>
+        <!--/幻灯片-->
+    </div>
+    <!--/商品图片-->
+
+
+    <!--商品信息-->
+    <div class="goods-spec">
+
+        <h1> @Model.GoodsName</h1>
+
+        <div class="spec-box">
+            <dl>
+                <dt>发布人</dt>
+
+                <dd >@userinfo.UserName</dd>
+
+            </dl>
+            <dl>
+                <dt>编号</dt>
+                <dd >@Model.ID</dd>
+            </dl>
+            <dl>
+                <dt>估计价</dt>
+                <dd><em class="price">¥@Model.GoodsPrice</em></dd>
+            </dl>
+            <dl>
+                <dt>发布时间</dt>
+                <dd><em >@Model.RegTime</em></dd>
+            </dl>
+            <dl>
+                <dt>物品地址</dt>
+                <dd><em >@Model.GoodsAddress</em></dd>
+            </dl>
+            <dl>
+                <dt>数量</dt>
+                <dd>
+                    <div class="stock-box">
+                        <input id="Goods_Id" type="hidden" value="@Model.ID"/>
+                        <input id="GoodsPrice" type="hidden" value="@Model.GoodsPrice"/>
+                        <input id="commoditySelectNum" type="text" maxlength="9" value="1" maxValue="@Model.GoodsNum" onkeydown="return checkNumber(event);" readonly="true">
+                        <a class="add" onclick="addCartNum(1);">+</a>
+                        <a class="remove" onclick="addCartNum(-1);">-</a>
+                    </div>
+                    <span class="stock-txt">
+                库存<em id="commodityStockNum">@Model.GoodsNum</em>件
+              </span>
+
+
+                </dd>
+            </dl>
+        </div>
+
+        <script type="text/javascript">
+            function submitorder() {
+                var goods_id = $("#Goods_Id").val();
+                var goods_count = $("#commoditySelectNum").val();
+                window.location.href = "/orderinfo/shop?goods_id=" + goods_id + "&goods_count=" + goods_count + "";
+            }
+        </script>
+
+        <div class="spec-box">
+            <dl>
+                <dd>
+                    <div id="buyButton" class="btn-buy">
+                        <a href="javascript:void(0)" onclick="submitorder();" class="btn">立即购买</a>
+                        <a href="javascript:void(0)" onclick="cartAdd(this, '/', 0, '/UserInfo/MyCart');" class="btn btn-success">加入购物车</a>
+                        <input id="GoodsId" name="GoodsId" value="@Model.ID" type="hidden"/>
+
+                    </div>
+                </dd>
+            </dl>
+        </div>
+
+        <div class="spec-box line">
+            <dl>
+                <dd>
+                    <!--分享-->
+                    <!-- JiaThis Button BEGIN -->
+                    <div id="ckepop">
+                        <span class="jiathis_txt">分享到：</span>
+                        <a class="jiathis_button_tqq">腾讯</a>
+                        <a class="jiathis_button_tsina">新浪</a>
+                        <a class="jiathis_button_renren">人人网</a>
+                        <a class="jiathis_button_email">邮件</a>
+                        <a class="jiathis_button_fav">收藏夹</a>
+                        <a class="jiathis_button_copy">复制网址</a>
+                        <a href="http://www.jiathis.com/share/?uid=90225" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+                        <a class="jiathis_counter_style"></a>
+                    </div>
+                    <!-- JiaThis Button END -->
+                    <script type="text/javascript">var jiathis_config = { data_track_clickback: true };</script>
+                    <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js?uid=1336353133859589" charset="utf-8"></script>
+                    <!--/分享-->
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+
+    <!--商品信息-->
+    <div class="line20"></div>
+    <!--商品介绍-->
+    <div id="goodsTabs" class="goods-tab">
+        <!--选项卡-->
+        <div id="tabHead" class="tab-head">
+            <ul>
+                <li>
+                    <a class="selected" href="javascript:;">商品介绍</a>
+                </li>
+                <li>
+                    <a href="javascript:;">商品评论</a>
+                </li>
+
+            </ul>
+        </div>
+        <!--/选项卡-->
+
+        <!--选项内容-->
+        <div class="tab-content entry" style="display: block">
+
+            <p>
+
+                @Html.Raw(Model.GoodsRemark)
+            </p>
+
+        </div>
+        <!--选项内容-->
+        <!--选项内容-->
+        <div class="tab-content ">
+            <script type="text/javascript">
+                $(function() {
+                    $("#comment_form").submit(function() {
+                        $.ajax({
+                            url: "/goodsmanage/comment/save",
+                            type: "post",
+                            data: $("#comment_form").serialize(),
+                            success: function(data) {
+                                $.post("/goodsmanage/comment/GetList", { goodsId:@Model.ID }, function(result) {
+                                    
+                                    $("#comment_list").html(result);
+
+                                });
+                            }
+
+                        });
+                        return false;
+                    });
+                });
+
+
+            </script>
+            <div class="comment-add">
+                <form id="comment_form">
+                    <div class="editor">
+                        <textarea id="Content" name="Content" class="input" datatype="*" sucmsg=" "></textarea>
+                        @Html.Hidden("GoodsInfoID", Model.ID)
+
+                    </div>
+                    <div class="subcon">
+                        <input id="btnSubmit" name="submit" type="submit" class="btn right" value="提交评论"/>
+                    </div>
+                </form>
+
+            </div>
+            <div class="line10"></div>
+            <div class="comment-box">
+                <ol id="comment_list" class="comment-list">
+                    @foreach (var b in Model.Comment.OrderByDescending(u => u.CreateTime))
+                    {
+                        <li>
+                            <div class="avatar"><img src="@b.UserImg">
+                            </div>
+                            <div class="inner">
+                                <p>@b.Content</p>
+                                <div class="meta"><span class="blue">@b.UserName</span>
+                                    <span class="time">@b.CreateTime</span></div>
+                            </div>
+
+                        </li>
+                    }
+
+
+                </ol>
+            </div>
+        </div>
+
+        <!--选项内容-->
+    </div>
+    <!--/商品介绍-->
+    </div>
+    <!--页面左边结束-->
+
+    <!--页面右边-->
+    <div class="left211">
+        <div class="sidebar-box">
+            <div class="line30"></div>
+            <h3>推荐商品</h3>
+            <div class="red-list">
+                <ul>
+
+                    @{
+                        var enumerable = ViewBag.GoodsList1 as IEnumerable<HNCJ.Model.GoodsInfo>;
+                    }
+                    @if (enumerable != null)
+                    {
+                        foreach (var a in enumerable)
+                        {
+                            <li>
+                                <a title="@a.GoodsName" href="/HomePage/Details/@a.ID">
+                                    <div class="img-box">
+
+                                        @if (!string.IsNullOrEmpty(a.ImageMenu))
+                                        {
+                                            var img = a.ImageMenu.Split(',');
+                                            <img src="@img[0]"/>
+                                        }
+                                        else
+                                        {
+                                            <img src="@a.ImageMenu"/>
+                                        }
+
+                                    </div>
+                                    <span>@a.GoodsName</span>
+                                </a>
+                            </li>
+                        }
+                    }
+
+
+                </ul>
+            </div>
+            <div class="line10"></div>
+            <h3>人气排行</h3>
+            <ul class="rank-list">
+                @{int i = 1;}
+                @{
+                    var goodsInfos = ViewBag.GoodsList as IEnumerable<HNCJ.Model.GoodsInfo>;
+                }
+                @if (goodsInfos != null)
+                {
+                    foreach (var a in goodsInfos)
+                    {
+                        <li class="active">
+
+                            <span>@if (a.RegTime != null)
+                                  {
+                                      @a.RegTime.Value.ToString("yyyy-MM-dd hh:mm:ss")
+                                  }</span>
+                            <i class="num">@(i++)</i><a href="/HomePage/Details/@a.ID">@a.GoodsName</a>
+                        </li>
+
+                    }
+                }
+
+            </ul>
+        </div>
+    </div>
+    <!--/页面右边-->
+    </div>
+    </div>
+
+
+    <!-----------------------------------------------中间内容-------------------------------------->
+
+
+}
+
+
+

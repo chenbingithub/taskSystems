@@ -1,0 +1,52 @@
+﻿@model HNCJ.Model.UserInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>个人信息</title>
+</head>
+<body>
+    <fieldset>
+        <legend>个人信息</legend>
+        <div class="display-label">
+             @Html.LabelFor(model => model.Avatar,"头像")
+        </div>
+        <div class="display-field">
+            <img src="@Model.Avatar" style="height:60px;width:60px;" />
+        </div>
+        <div class="display-label">
+             @Html.LabelFor(model => model.UserName,"用户名")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.UserName)
+        </div>
+    
+        
+    
+        <div class="display-label">
+             @Html.LabelFor(model => model.NickName,"真实姓名")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.NickName)
+        </div>
+    
+        
+        <div class="display-label">
+             @Html.LabelFor(model => model.RegTime,"注册时间")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.RegTime)
+        </div>
+    
+       
+        
+    </fieldset>
+    
+</body>
+</html>

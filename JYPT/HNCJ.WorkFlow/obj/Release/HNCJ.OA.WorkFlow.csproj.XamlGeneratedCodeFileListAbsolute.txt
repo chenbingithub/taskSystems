@@ -1,0 +1,2 @@
+obj\Release\_HNCJ.OA.WorkFlow.g.cs
+obj\Release\FincalActivity.g.cs

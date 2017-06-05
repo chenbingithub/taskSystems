@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section script{
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+        var SysLogCtrl = Object.create(Common);
+        $(function () {
+            var urls = {
+                urladd: "/baseinfo/sysloginfo/add",
+                urledit: "/baseinfo/sysloginfo/edit",
+                urldelete: "/baseinfo/sysloginfo/delete"
+            };
+            SysLogCtrl.Init($("#dg"), $("#syslogdialog"), urls);
+            $('#dg').datagrid({
+                width: '100%',
+                height: '100%',
+                url: '/baseinfo/sysloginfo/getallsyslogs',
+                pageSize: 20,
+                pagination: true,
+                rownumbers: true,
+                fitColumns: true,
+                toolbar: "#toolbar",
+                columns: [[
+                    { field: 'ck', width: 50, checkbox: true },
+                    { field: 'UserName', title: '用户', width: 80 },
+                    { field: 'Operation', title: '操作', width: 120, align: 'center' },
+                    {
+                        field: 'OperationTime', title: '操作时间', width: 100, align: 'center', formatter: function (value) {
+                            return value.formatter("yyyy-MM-dd hh:mm:ss");
+                        }
+                    }
+
+                ]]
+            });
+            //设置分页控件 
+            var p = $('#dg').datagrid('getPager');
+            $(p).pagination({
+                pageSize: 20,//每页显示的记录条数，默认为10 
+                pageList: [10, 20, 50],//可以设置每页记录条数的列表 
+                beforePageText: '第',//页数文本框前显示的汉字 
+                afterPageText: '页    共 {pages} 页',
+                displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+
+            });
+        });
+        
+        
+	</script>
+
+    }
+   
+ 
+
+<div id="p" class="easyui-panel" fit="true" border="false">
+       <table id="dg"></table>
+   </div>
+ 
+     <div id="toolbar">
+            @Html.PermissionButton("SysLog.Add","a_add","#","新增",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_add"},{"class","easyui-linkbutton"},{"onclick","SysLogCtrl.addClick()"}})
+            @Html.PermissionButton("SysLog.Edit","a_edit","#","编辑",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_edit"},{"class","easyui-linkbutton"},{"onclick","SysLogCtrl.editClick()"}})
+            @Html.PermissionButton("SysLog.Delete","a_del","#","删除",new  Dictionary<string, object>{{"plain","true"},{"icon","icon-group_delete"},{"class","easyui-linkbutton"},{"onclick","SysLogCtrl.deleteClick()"}})
+
+               @* <a id="a_add"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_add"   onclick="SysLogCtrl.addClick()">新增</a>
+                <a id="a_edit"    href="#" plain="true" class="easyui-linkbutton" icon="icon-group_edit" onclick="SysLogCtrl.editClick()" >编辑</a>
+                <a id="a_del"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_delete"  onclick="SysLogCtrl.deleteClick()">删除</a>*@
+            
+
+    </div>   
+    <div id="syslogdialog"></div>

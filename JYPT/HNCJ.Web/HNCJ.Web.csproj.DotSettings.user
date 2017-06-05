@@ -1,0 +1,5 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=GOODSMANAGE_005CCOMMENT_005CSAVE/@EntryIndexedValue">goodsmanage\comment\save</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=USERINFO_005CSETAVATAR/@EntryIndexedValue">UserInfo\SetAvatar</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=GOODSMANAGE_005CCOMMENT_005CSAVE/@EntryIndexedValue">goodsmanage\comment\save</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=USERINFO_005CSETAVATAR/@EntryIndexedValue">UserInfo\SetAvatar</s:String></wpf:ResourceDictionary>

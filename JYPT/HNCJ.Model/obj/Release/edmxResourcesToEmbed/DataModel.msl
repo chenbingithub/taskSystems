@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="DataModelContainer">
+    <EntitySetMapping Name="UserInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.UserInfo)">
+        <MappingFragment StoreEntitySet="UserInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="salt" ColumnName="salt" />
+          <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="IsSys" ColumnName="IsSys" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAction">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.UserActionInfo)">
+        <MappingFragment StoreEntitySet="UserAction">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="HasPermissin" ColumnName="HasPermissin" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+          <ScalarProperty Name="ActionInfoID" ColumnName="ActionInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActionInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.ActionInfo)">
+        <MappingFragment StoreEntitySet="ActionInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="HttpMethd" ColumnName="HttpMethd" />
+          <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+          <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.RoleInfo)">
+        <MappingFragment StoreEntitySet="RoleInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInfoExt">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.UserInfoExt)">
+        <MappingFragment StoreEntitySet="UserInfoExt">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Moblie" ColumnName="Moblie" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Telphone" ColumnName="Telphone" />
+          <ScalarProperty Name="area" ColumnName="area" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="qq" ColumnName="qq" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.OrderInfo)">
+        <MappingFragment StoreEntitySet="OrderInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OrderName" ColumnName="OrderName" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Money" ColumnName="Money" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="DeliverTime" ColumnName="DeliverTime" />
+          <ScalarProperty Name="SuccessTime" ColumnName="SuccessTime" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.GoodsInfo)">
+        <MappingFragment StoreEntitySet="GoodsInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GoodsName" ColumnName="GoodsName" />
+          <ScalarProperty Name="GoodsPrice" ColumnName="GoodsPrice" />
+          <ScalarProperty Name="GoodsRemark" ColumnName="GoodsRemark" />
+          <ScalarProperty Name="GoodsNum" ColumnName="GoodsNum" />
+          <ScalarProperty Name="ImageMenu" ColumnName="ImageMenu" />
+          <ScalarProperty Name="GoodsAddress" ColumnName="GoodsAddress" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+          <ScalarProperty Name="GoodsTypeID" ColumnName="GoodsTypeID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsType">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.GoodsType)">
+        <MappingFragment StoreEntitySet="GoodsType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="English" ColumnName="English" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LinksInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.LinksInfo)">
+        <MappingFragment StoreEntitySet="LinksInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FocusPicture">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.FocusPicture)">
+        <MappingFragment StoreEntitySet="FocusPicture">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Freight">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Freight)">
+        <MappingFragment StoreEntitySet="Freight">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FreightName" ColumnName="FreightName" />
+          <ScalarProperty Name="FreightPrice" ColumnName="FreightPrice" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payment">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Payment)">
+        <MappingFragment StoreEntitySet="Payment">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PaymentName" ColumnName="PaymentName" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WFTemp">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.WFTemp)">
+        <MappingFragment StoreEntitySet="WFTemp">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TempName" ColumnName="TempName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TempForm" ColumnName="TempForm" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WFInstance">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.WFInstance)">
+        <MappingFragment StoreEntitySet="WFInstance">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="InstanceName" ColumnName="InstanceName" />
+          <ScalarProperty Name="StartBy" ColumnName="StartBy" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="WFTempID" ColumnName="WFTempID" />
+          <ScalarProperty Name="WFInstanceId" ColumnName="WFInstanceId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.FileInfo)">
+        <MappingFragment StoreEntitySet="FileInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileType" ColumnName="FileType" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WFStep">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.WFStep)">
+        <MappingFragment StoreEntitySet="WFStep">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StepName" ColumnName="StepName" />
+          <ScalarProperty Name="ProcessBy" ColumnName="ProcessBy" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="ProcessTime" ColumnName="ProcessTime" />
+          <ScalarProperty Name="ProcessResult" ColumnName="ProcessResult" />
+          <ScalarProperty Name="ProcessComment" ColumnName="ProcessComment" />
+          <ScalarProperty Name="StepStatus" ColumnName="StepStatus" />
+          <ScalarProperty Name="IsStartStep" ColumnName="IsStartStep" />
+          <ScalarProperty Name="IsEndStep" ColumnName="IsEndStep" />
+          <ScalarProperty Name="ParentStepId" ColumnName="ParentStepId" />
+          <ScalarProperty Name="WFInstanceID" ColumnName="WFInstanceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AddressInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.AddressInfo)">
+        <MappingFragment StoreEntitySet="AddressInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+          <ScalarProperty Name="Telphone" ColumnName="Telphone" />
+          <ScalarProperty Name="DetailedAddress" ColumnName="DetailedAddress" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transaction">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Transaction)">
+        <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Account">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Account)">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="Money" ColumnName="Money" />
+          <ScalarProperty Name="PayPwd" ColumnName="PayPwd" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoginLog">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.LoginLog)">
+        <MappingFragment StoreEntitySet="LoginLog">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Site" ColumnName="Site" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="reg_ip" ColumnName="reg_ip" />
+          <ScalarProperty Name="Isphone" ColumnName="Isphone" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.CartInfo)">
+        <MappingFragment StoreEntitySet="CartInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GoodsNum" ColumnName="GoodsNum" />
+          <ScalarProperty Name="GoodsPrice" ColumnName="GoodsPrice" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="ModfiedOn" ColumnName="ModfiedOn" />
+          <ScalarProperty Name="UserInfoID" ColumnName="UserInfoID" />
+          <ScalarProperty Name="GoodsInfoID" ColumnName="GoodsInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetailInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.OrderDetailInfo)">
+        <MappingFragment StoreEntitySet="OrderDetailInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GoodsNum" ColumnName="GoodsNum" />
+          <ScalarProperty Name="GoodsPrice" ColumnName="GoodsPrice" />
+          <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="OrderInfoID" ColumnName="OrderInfoID" />
+          <ScalarProperty Name="GoodsInfoID" ColumnName="GoodsInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserInfoRoleInfo" TypeName="DataModel.UserInfoRoleInfo" StoreEntitySet="UserInfoRoleInfo">
+      <EndProperty Name="UserInfo">
+        <ScalarProperty Name="ID" ColumnName="UserInfo_ID" />
+      </EndProperty>
+      <EndProperty Name="RoleInfo">
+        <ScalarProperty Name="ID" ColumnName="RoleInfo_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RoleInfoActionInfo" TypeName="DataModel.RoleInfoActionInfo" StoreEntitySet="RoleInfoActionInfo">
+      <EndProperty Name="RoleInfo">
+        <ScalarProperty Name="ID" ColumnName="RoleInfo_ID" />
+      </EndProperty>
+      <EndProperty Name="ActionInfo">
+        <ScalarProperty Name="ID" ColumnName="ActionInfo_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="WFInstanceFileInfo" TypeName="DataModel.WFInstanceFileInfo" StoreEntitySet="WFInstanceFileInfo">
+      <EndProperty Name="WFInstance">
+        <ScalarProperty Name="ID" ColumnName="WFInstance_ID" />
+      </EndProperty>
+      <EndProperty Name="FileInfo">
+        <ScalarProperty Name="ID" ColumnName="FileInfo_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserInfoUserInfoExt" TypeName="DataModel.UserInfoUserInfoExt" StoreEntitySet="UserInfoExt">
+      <EndProperty Name="UserInfo">
+        <ScalarProperty Name="ID" ColumnName="UserInfo_ID" />
+      </EndProperty>
+      <EndProperty Name="UserInfoExt">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

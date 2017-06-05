@@ -1,0 +1,92 @@
+﻿@model HNCJ.Model.OrderInfo
+
+@{
+    Layout = null;
+}
+
+    <div class="u-tab-content">
+    <div class="form-box accept-box">
+          <dl class="head">
+              <dt>订单号： </dt>
+            <dd>
+              @Model.OrderName
+              
+            </dd>
+          </dl>
+          <dl>
+            <dt>订单状态：</dt>
+            <dd>
+               @HNCJ.Common.Utils.OrderInfoStatus((int)Model.Status)
+            </dd>
+          </dl>
+           <dl>
+            <dt>买家：</dt>
+            <dd>
+               @Model.UserInfo.UserName
+            </dd>
+          </dl>
+        </div>
+              
+        <div class="line10"></div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="5" class="ftable">
+          <tr>
+            <th align="left" colspan="2">商品信息</th>
+            <th width="10%">单价</th>
+            <th width="10%">数量</th>
+            <th width="10%">金额</th>
+
+          </tr>
+          @foreach(var item in Model.OrderDetailInfo ){
+          <tr>
+            <td width="60">
+                @{
+                    var ImageMenu = item.GoodsInfo.ImageMenu;
+                                    if (!string.IsNullOrEmpty(ImageMenu))
+                                        {
+                                            var img =ImageMenu.Split(',');
+                                            <img src="@(img[0])" class="img"/>
+                                        }
+                                        else
+                                        {
+                                             <img src="@(ImageMenu)" class="img"/>
+                                        }
+                                    }
+            </td>
+            <td align="left">
+              @item.GoodsInfo.GoodsName
+              <p></p>
+            </td>
+            <td align="center">
+              <p>￥@item.GoodsInfo.GoodsPrice</p>
+            </td>
+            
+            <td align="center">@item.GoodsNum</td>
+              @{var money = item.GoodsNum * item.GoodsPrice;}
+            <td align="center">￥@money</td>
+          </tr>
+          }
+          <tr>
+            <td colspan="7" align="right">
+                
+              <p>商品金额：<b class="red">￥@Model.Money</b>&nbsp;&nbsp;+&nbsp;&nbsp;运费：<b class="red">￥0</b></p>
+              <p style="font-size:22px;">实付总金额：<b class="red">￥@Model.Money</b></p>
+            </td>
+          </tr>
+        </table>
+        <div class="line10"></div>
+        <div class="form-box accept-box">
+          <dl class="head">
+            <dt>收货信息</dt>
+              <dd></dd>
+          </dl>
+          <dl>
+            <dt>收货地址：</dt>
+            <dd>@Model.Address</dd>
+          </dl>
+          
+          <dl>
+            <dt>备注留言：</dt>
+            <dd>@Html.Label(Model.Content)</dd>
+          </dl>
+        </div>
+        </div>

@@ -1,0 +1,426 @@
+﻿@using HNCJ.Common
+@model HNCJ.Model.RoleInfo
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section script{
+    <script type="text/javascript">
+        
+       
+        var RoleInfoCtrl = {
+            //初始化
+            Init: function () {
+                this.CreateDatagrid();
+            },
+            //创建数据表格
+            CreateDatagrid: function () {
+                $('#dg').datagrid({
+                    height: '100%',
+                    width: '100%',
+                    url: '/baseinfo/roleinfo/GetAllroleinfos',
+                    pageSize: 20,
+                    pagination: true,
+                    rownumbers: true,
+                    fitColumns: true,
+                    toolbar: "#toolbar",
+                    
+                    columns: [[
+                        { field: 'ck', width: 50, checkbox: true },
+                        { field: 'RoleNo', title: '编号', width: 80 },
+                        { field: 'RoleName', title: '名称', width: 80, align: 'center' },
+                        { field: 'State', title: '有效', width: 50, align: 'center', formatter: this.IsChecked },
+                        { field: 'Description', title: '描述', width: 120, align: 'center' }
+                    ]]
+                });
+                //设置分页控件 
+                var p = $('#dg').datagrid('getPager');
+                $(p).pagination({
+                    pageSize: 10,//每页显示的记录条数，默认为10 
+                    pageList: [5, 10, 15],//可以设置每页记录条数的列表 
+                    beforePageText: '第',//页数文本框前显示的汉字 
+                    afterPageText: '页    共 {pages} 页',
+                    displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+                    
+                });
+            },
+            //重新加载表格
+            ReloadDatagrid: function () {
+                $('#dg').datagrid('load');
+            },
+            //搜索
+            doSearch:function () {
+
+                $('#dg').datagrid('load', {
+                Itemid: $('#itemid').val(),
+                KeyString: $('#key').val()
+                 });
+            },
+            //显示是否有效
+            IsChecked: function (value, row) {
+                if (value == 1) {
+                    return '<a href="#" onclick=\'RoleInfoCtrl.SetStatus(' + row.ID + ',' + value + ')\'><span class="icon icon-chk_checked">&nbsp;</span></a>';
+                } else {
+                    return '<a href="#" onclick=\'RoleInfoCtrl.SetStatus(' + row.ID + ',' + value + ')\'><span class="icon icon-chk_unchecked">&nbsp;</span></a>';
+                }
+
+            },
+            SetStatus: function (roleid, state) {
+                $.post("/baseinfo/roleinfo/SetStatus", { roleid: roleid, state: state }, function(data) {
+                    if (data.status == 1) {
+
+                        RoleInfoCtrl.ReloadDatagrid();
+                    } else {
+                        $.messager.show({
+                            title: '提示',
+                            msg: data.msg,
+                            showType: 'slide',
+                            timeout: 2000,
+                            style: {
+                                right: '',
+                                top: document.body.scrollTop + document.documentElement.scrollTop,
+                                bottom: ''
+                            }
+                        });
+                    }
+                });
+            },
+            
+            //公用按钮
+            ButtonCommon: function () {
+                $('#ff').form('submit', {
+                    onSubmit: function () {
+                        var isValid = $(this).form('enableValidation').form('validate');
+
+                        if (!isValid) {
+                            $.messager.progress('close');
+                        }
+                        return isValid;
+                    },
+                    success: function (result) {
+                        var data = eval('(' + result + ')'); // change the JSON string to javascript object
+                        if (data.status === 1) {
+                            $('#roleinfodialog').dialog('close');
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 2000
+                            });
+                            RoleInfoCtrl.ReloadDatagrid();
+                        }  else {
+                            $.messager.show({
+                                title: '提示',
+                                msg: data.msg,
+                                showType: 'slide',
+                                timeout: 2000,
+                                style: {
+                                    right: '',
+                                    top: document.body.scrollTop + document.documentElement.scrollTop,
+                                    bottom: ''
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+            //点击新增
+            addClick: function () {
+                var url = "/baseinfo/roleinfo/add";
+                $('#roleinfodialog').dialog({
+                    title: '添加角色',
+                    width: 600,
+                    height: 300,
+                    href:url,
+                    closed: false,
+                    cache: false,
+                    maximizable:true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            RoleInfoCtrl.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#roleinfodialog').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //编辑方法
+            editClick: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length != 1) return;
+                var row = $('#dg').datagrid('getSelected');
+                var url = "/baseinfo/roleinfo/Edit/" + row.ID;
+                $('#roleinfodialog').dialog({
+                    title: '编辑角色',
+                    width: 600,
+                    height: 300,
+                    href: url,
+                    closed: false,
+                    cache: false,
+                    maximizable: true,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            RoleInfoCtrl.ButtonCommon();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#roleinfodialog').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            //多选删除
+            deleteClick: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                var ids = "";
+                if (rows.length > 0) {
+                    for (var key in rows) {
+                        ids = ids + rows[key].ID + ",";
+                    }
+                    ids = ids.substr(0, ids.length - 1);
+                    $.messager.confirm('Confirm', '你确定要删除吗?', function (r) {
+                        if (r) {
+                            $.post("/baseinfo/roleinfo/delete", { ids: ids }, function (data) {
+                                if (data.status == 1) {
+                                    $.messager.show({
+                                        title: '提示',
+                                        msg: data.msg,
+                                        showType: 'slide',
+                                        timeout: 2000,
+                                    });
+                                    RoleInfoCtrl.ReloadDatagrid();
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            }, 'json');
+                        }
+                    });
+                }
+                return;
+            },
+            TreePermission: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                var row = $('#dg').datagrid('getSelected');
+                $.fn.zTree.init($("#roletreePermission"), {
+                    data: {
+                        key: {
+                            name: "ActionName"
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: "ID",
+                            pIdKey: "ParentId"
+                           
+                        }
+                    },
+                    check: {
+                        enable: true
+                    },
+
+                    async: {
+                        enable: true,
+                        url: "/baseinfo/roleinfo/GetPermissionList",
+                        otherParam:{roleid:row.ID }
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("roletreePermission");
+                            var nodes = treeObj.getNodes();
+                            if (nodes.length > 0) {
+                                treeObj.expandNode(nodes[0], true, false, true);
+                            }
+
+                        }
+                    }
+
+                });
+            },
+            TreePermissionItem: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                var row = $('#dg').datagrid('getSelected');
+                $.fn.zTree.init($("#roletreePermission"), {
+                    data: {
+                        key: {
+                            name: "ActionName"
+                        },
+                        simpleData: {
+                            enable: true,
+                            idKey: "ActionId",
+                            pIdKey: "ParentId"
+
+                        }
+                    },
+                    check: {
+                        enable: true
+                    },
+
+                    async: {
+                        enable: true,
+                        url: "/baseinfo/roleinfo/GetPermissionItemList",
+                        otherParam: { roleid: row.ID }
+                    },
+                    callback: {
+                        onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                            var treeObj = $.fn.zTree.getZTreeObj("roletreePermission");
+                            var nodes = treeObj.getNodes();
+                            if (nodes.length > 0) {
+                                treeObj.expandNode(nodes[0], true, false, true);
+                            }
+
+                        }
+                    }
+
+                });
+            },
+            OpenPermissionView: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                var url = '/baseinfo/roleinfo/setPermission';
+                $('#roleinfodialog').dialog({
+                    title: '关联模块',
+                    width: 400,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: url,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            var treeObj = $.fn.zTree.getZTreeObj("roletreePermission");
+                            var nodes = treeObj.getCheckedNodes(true);
+                            var actionids = "";
+                            for (var i in nodes) {
+                                actionids += nodes[i].ID + ",";
+                            }
+                            actionids = actionids.substr(0, actionids.length - 1);
+                            var row = $('#dg').datagrid('getSelected');
+                            $.post("/baseinfo/roleinfo/ProcessSetPermission", { roleid: row.ID, actionids: actionids }, function (data) {
+                                if (data.status === 1) {
+                                    $('#roleinfodialog').dialog('close');
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            });
+
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#roleinfodialog').dialog('close');
+
+                        }
+                    }]
+                });
+            },
+            OpenPermissionItemView: function () {
+                var rows = $('#dg').datagrid('getSelections');
+                if (rows.length !== 1) return;
+                var url = '/baseinfo/roleinfo/setPermissionItem';
+                $('#roleinfodialog').dialog({
+                    title: '关联操作权限',
+                    width: 400,
+                    height: 300,
+                    closed: false,
+                    cache: false,
+                    href: url,
+                    modal: true,
+                    buttons: [{
+                        text: '确定',
+                        handler: function () {
+                            var treeObj = $.fn.zTree.getZTreeObj("roletreePermission");
+                            var nodes = treeObj.getCheckedNodes(true);
+                            var actionids = "";
+                            for (var i in nodes) {
+                                if (nodes[i].IsMenu) continue;
+                                actionids += nodes[i].ID + ",";
+                            }
+                            actionids = actionids.substr(0, actionids.length - 1);
+                            var row = $('#dg').datagrid('getSelected');
+                            $.post("/baseinfo/roleinfo/ProcessSetPermissionItem", { roleid: row.ID, actionids: actionids }, function (data) {
+                                if (data.status === 1) {
+                                    $('#roleinfodialog').dialog('close');
+                                } else {
+                                    $.messager.show({	// show error message
+                                        title: 'Error',
+                                        msg: data.msg
+                                    });
+                                }
+                            });
+
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#roleinfodialog').dialog('close');
+
+                        }
+                    }]
+                });
+            }
+        };
+
+        $(function () {
+            RoleInfoCtrl.Init();
+        });
+    </script>
+}
+
+
+   <div id="p" class="easyui-panel" fit="true" border="false">
+       <table id="dg"></table>
+   </div>
+ 
+     <div id="toolbar">
+            @if (DoSetManage.IsIsAuthorized("RoleInfo.Add"))
+            {
+                <a id="a_add"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_add"   onclick="RoleInfoCtrl.addClick()">新增</a>
+            }
+         @if (DoSetManage.IsIsAuthorized("RoleInfo.Edit"))
+         {
+               <a id="a_edit"    href="#" plain="true" class="easyui-linkbutton" icon="icon-group_edit" onclick="RoleInfoCtrl.editClick()" >编辑</a>
+         }
+         @if (DoSetManage.IsIsAuthorized("RoleInfo.Delete"))
+            {
+                 <a id="a_del"     href="#" plain="true" class="easyui-linkbutton" icon="icon-group_delete"  onclick="RoleInfoCtrl.deleteClick()">删除</a>
+
+            }
+         @if (DoSetManage.IsIsAuthorized("RoleInfo.Permission"))
+            {
+                <a id="a_permission"     href="#" plain="true" class="easyui-linkbutton" icon="icon-monitor"  onclick="RoleInfoCtrl.OpenPermissionView()">关联模块</a>
+
+            }
+            @if (DoSetManage.IsIsAuthorized("RoleInfo.PermissionItem"))
+            {
+                <a id="a_permissionitem"     href="#" plain="true" class="easyui-linkbutton" icon="icon-monitor_key"  onclick="RoleInfoCtrl.OpenPermissionItemView()">关联操作权限</a>
+            }     
+                
+                
+            <div style="float:right;">
+   
+                <input type="hidden" name="Itemid" id="itemid" value="1" />
+	    <input name="KeyString" id="key" type="text"class="easyui-textbox" onkeydown="if(event.keyCode==13){RoleInfoCtrl.doSearch();}">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="RoleInfoCtrl.doSearch()">搜索</a>
+        </div>
+
+    </div>   
+    <div id="roleinfodialog"></div>
