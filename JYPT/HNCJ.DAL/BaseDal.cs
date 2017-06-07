@@ -64,7 +64,7 @@ namespace HNCJ.DAL
         #region 删除方法
         public bool Delete(T entity)
         {
-            db.Entry(entity).State = EntityState.Deleted;.
+            db.Entry(entity).State = EntityState.Deleted;
             return true;
         }
         public bool Delete(int id) {
