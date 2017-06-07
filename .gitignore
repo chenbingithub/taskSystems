@@ -3,3 +3,22 @@
 ################################################################################
 
 *.dll
+/JYPT/HNCJ.BLL/bin/Debug
+/JYPT/HNCJ.BLL/obj/Debug
+/JYPT/HNCJ.Common/bin/Debug
+/JYPT/HNCJ.Common/obj/Debug
+/JYPT/HNCJ.DAL/bin/Debug
+/JYPT/HNCJ.DAL/obj/Debug
+*.user
+/JYPT/HNCJ.DalFactory/bin/Debug
+/JYPT/HNCJ.DalFactory/obj/Debug
+/JYPT/HNCJ.IBLL/bin/Debug
+/JYPT/HNCJ.IBLL/obj/Debug
+/JYPT/HNCJ.IDAL/bin/Debug
+/JYPT/HNCJ.IDAL/obj/Debug
+/JYPT/HNCJ.Model/bin/Debug
+/JYPT/HNCJ.Model/obj/Debug
+/JYPT/HNCJ.Web/bin
+/JYPT/HNCJ.Web/obj/Debug
+/JYPT/HNCJ.WorkFlow/bin/Debug
+/JYPT/HNCJ.WorkFlow/obj/Debug
