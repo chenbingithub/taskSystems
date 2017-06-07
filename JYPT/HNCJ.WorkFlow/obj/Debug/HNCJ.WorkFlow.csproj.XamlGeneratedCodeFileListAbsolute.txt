@@ -1,2 +1,0 @@
-obj\Debug\_HNCJ.WorkFlow.g.cs
-obj\Debug\FincalActivity.g.cs
